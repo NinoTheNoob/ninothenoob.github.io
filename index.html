@@ -4,21 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nino — Portfolio & Socials</title>
-  <!-- Clean modern + editorial serif fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
-  <!-- FontAwesome for crisp Discord, YouTube, Steam, & Gaming icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     :root {
-      --glass-bg: rgba(34, 62, 78, 0.42);
+      --glass-bg: rgba(34, 62, 78, 0.44);
       --glass-card: rgba(255, 255, 255, 0.08);
-      --glass-card-hover: rgba(255, 255, 255, 0.14);
+      --glass-card-hover: rgba(255, 255, 255, 0.15);
       --glass-border: rgba(255, 255, 255, 0.18);
       --text-main: #f4f8fb;
-      --text-muted: rgba(235, 245, 252, 0.72);
+      --text-muted: rgba(235, 245, 252, 0.74);
       --accent: #7dd3fc;
     }
 
@@ -32,7 +30,6 @@
       font-family: 'Inter', sans-serif;
       color: var(--text-main);
       min-height: 100vh;
-      /* Scenic misty blue/teal atmospheric wallpaper - swap URL with any anime/scenic image you like! */
       background: 
         linear-gradient(180deg, rgba(16, 36, 48, 0.35) 0%, rgba(12, 28, 38, 0.65) 100%),
         url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80') center/cover fixed no-repeat;
@@ -182,7 +179,7 @@
 
     .profile-info h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.75rem;
+      font-size: 1.85rem;
       letter-spacing: 1px;
       margin-bottom: 2px;
     }
@@ -195,7 +192,7 @@
       margin-bottom: 16px;
     }
 
-    /* Quick Action Pills (Discord, YouTube, Steam, Extra) */
+    /* Quick Action Pills */
     .pill-row {
       display: flex;
       flex-wrap: wrap;
@@ -207,13 +204,13 @@
       background: var(--glass-card);
       border: 1px solid var(--glass-border);
       border-radius: 10px;
-      padding: 7px 13px;
+      padding: 7px 12px;
       text-decoration: none;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 68px;
+      min-width: 66px;
       transition: all 0.2s ease;
     }
 
@@ -292,6 +289,7 @@
       position: relative;
       width: 54px;
       height: 54px;
+      flex-shrink: 0;
     }
 
     .discord-avatar-wrap img {
@@ -309,9 +307,398 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: #747f8d; /* offline default */
+      background: #80848e;
       border: 2px solid #1e3847;
     }
 
     .discord-details h4 {
-      font-size: 0.
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .discord-details .handle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .discord-details .activity {
+      font-size: 0.75rem;
+      color: #a5f3fc;
+    }
+
+    /* Tech Stack & Games Grid (Bottom Left) */
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+    }
+
+    .icon-tile {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 13px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    .icon-tile:hover {
+      background: var(--glass-card-hover);
+      transform: translateY(-3px);
+    }
+
+    .icon-tile i, .icon-tile svg {
+      font-size: 1.2rem;
+      width: 20px;
+      height: 20px;
+      opacity: 0.92;
+    }
+
+    .icon-tile span {
+      font-size: 0.64rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* Right Column Highlight Cards */
+    .feature-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    .feature-card:hover {
+      background: rgba(42, 76, 95, 0.58);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+
+    .feature-content h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .feature-content p {
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .feature-link {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 34px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .footer-pill {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 860px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+      .profile-card {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+      .pill-row {
+        justify-content: center;
+      }
+      .icon-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="#" class="brand">
+        <img src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Nino" alt="Nino Avatar" id="nav-avatar">
+        <span>Nino</span>
+      </a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#discord">Discord</a>
+        <a href="#stack">Tech &amp; Games</a>
+      </div>
+    </div>
+
+    <div class="nav-socials">
+      <a href="https://discord.com/users/1519019638661451897" target="_blank" title="Discord (@Ninwwo)"><i class="fa-brands fa-discord"></i></a>
+      <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" title="Steam"><i class="fa-brands fa-steam"></i></a>
+      <a href="https://github.com/NinoTheNoob" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </nav>
+
+  <!-- Center Title -->
+  <header class="hero-header">
+    <h1>Portfolio</h1>
+    <p>Developer &bull; Gamer &bull; Creator</p>
+  </header>
+
+  <!-- Main Bento Grid -->
+  <main class="grid-container">
+
+    <!-- LEFT COLUMN -->
+    <div class="column">
+
+      <!-- Profile & Bio Card -->
+      <section class="glass-panel profile-card" id="about">
+        <div class="profile-info">
+          <h2>NINO</h2>
+          <div class="profile-subtitle">Developer &bull; Gamer</div>
+
+          <div class="pill-row">
+            <a href="https://discord.com/users/1519019638661451897" target="_blank" class="pill-btn">
+              <span class="tag">Chat</span>
+              <span class="label">Discord</span>
+            </a>
+            <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" class="pill-btn">
+              <span class="tag">Watch</span>
+              <span class="label">YouTube</span>
+            </a>
+            <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" class="pill-btn">
+              <span class="tag">Play</span>
+              <span class="label">Steam</span>
+            </a>
+            <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="pill-btn">
+              <span class="tag">Profile</span>
+              <span class="label">Roblox</span>
+            </a>
+            <a href="https://github.com/NinoTheNoob" target="_blank" class="pill-btn">
+              <span class="tag">Code</span>
+              <span class="label">GitHub</span>
+            </a>
+          </div>
+
+          <div class="about-title">About Me</div>
+          <p class="about-text">
+            I'm Nino (aka Ninwwo). I enjoy coding in Rust and Python, making videos on YouTube, and grinding games like Minecraft, Titanfall 2, Rainbow Six Siege, and Roblox. Feel free to add me on Steam or hit me up on Discord.
+          </p>
+        </div>
+
+        <div class="avatar-circle">
+          <img src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Nino" alt="Nino PFP" id="main-avatar">
+        </div>
+      </section>
+
+      <!-- Live Discord Presence Card -->
+      <section class="glass-panel" id="discord">
+        <h3 class="section-heading">Discord Presence</h3>
+        <div class="discord-box">
+          <div class="discord-avatar-wrap">
+            <img src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Nino" alt="Discord PFP" id="discord-pfp">
+            <span class="status-dot" id="discord-dot"></span>
+          </div>
+          <div class="discord-details">
+            <h4 id="discord-name">Nino</h4>
+            <div class="handle" id="discord-tag">@Ninwwo</div>
+            <div class="activity" id="discord-activity">Offline — desktop</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tech Stack & Main Games -->
+      <section class="glass-panel" id="stack">
+        <h3 class="section-heading">Tech Stack &amp; Games</h3>
+        <div class="icon-grid">
+          <div class="icon-tile" title="Rust">
+            <i class="fa-brands fa-rust"></i>
+            <span>Rust</span>
+          </div>
+          <div class="icon-tile" title="Python">
+            <i class="fa-brands fa-python"></i>
+            <span>Python</span>
+          </div>
+          <div class="icon-tile" title="Minecraft">
+            <i class="fa-solid fa-cube"></i>
+            <span>Minecraft</span>
+          </div>
+          <div class="icon-tile" title="Titanfall 2">
+            <i class="fa-solid fa-robot"></i>
+            <span>Titanfall 2</span>
+          </div>
+          <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="icon-tile" title="Roblox">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>Roblox</span>
+          </a>
+          <div class="icon-tile" title="Rainbow Six Siege">
+            <i class="fa-solid fa-crosshairs"></i>
+            <span>R6 Siege</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="column">
+
+      <div class="right-section-label">Socials</div>
+
+      <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" class="glass-panel feature-card">
+        <div class="feature-icon"><i class="fa-brands fa-youtube"></i></div>
+        <div class="feature-content">
+          <h3>YouTube (@LinkNoir-x5p)</h3>
+          <p>Check out my channel for gameplay clips, edits, and videos.</p>
+          <span class="feature-link">Visit Channel &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" class="glass-panel feature-card">
+        <div class="feature-icon"><i class="fa-brands fa-steam"></i></div>
+        <div class="feature-content">
+          <h3>Steam (Nin00b)</h3>
+          <p>Add me on Steam to squad up on Titanfall 2, Rainbow Six Siege, and more.</p>
+          <span class="feature-link">Add Friend &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="glass-panel feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-gamepad"></i></div>
+        <div class="feature-content">
+          <h3>Roblox Profile</h3>
+          <p>View my Roblox profile, avatar, and join in when I'm online.</p>
+          <span class="feature-link">Open Profile &rarr;</span>
+        </div>
+      </a>
+
+      <div class="right-section-label">Code &amp; Community</div>
+
+      <a href="https://github.com/NinoTheNoob" target="_blank" class="glass-panel feature-card">
+        <div class="feature-icon"><i class="fa-brands fa-github"></i></div>
+        <div class="feature-content">
+          <h3>GitHub (NinoTheNoob)</h3>
+          <p>Explore my Rust and Python projects, scripts, and repositories.</p>
+          <span class="feature-link">View Repos &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://discord.com/users/1519019638661451897" target="_blank" class="glass-panel feature-card">
+        <div class="feature-icon"><i class="fa-brands fa-discord"></i></div>
+        <div class="feature-content">
+          <h3>Discord (Nino / @Ninwwo)</h3>
+          <p>Send a friend request or DM me directly on Discord.</p>
+          <span class="feature-link">Connect &rarr;</span>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://github.com/NinoTheNoob" target="_blank" class="footer-pill">GitHub</a>
+    <span>&copy; 2026 Nino</span>
+  </footer>
+
+  <!-- Live Discord Presence Script (via Lanyard API) -->
+  <script>
+    // Your Discord ID is already plugged in!
+    // Join discord.gg/lanyard once so your live PFP, status & current game show up automatically.
+    const DISCORD_USER_ID = "1519019638661451897";
+
+    const statusColors = {
+      online: "#23a55a",
+      idle: "#f0b232",
+      dnd: "#f23f43",
+      offline: "#80848e"
+    };
+
+    const statusLabels = {
+      online: "Online — desktop",
+      idle: "Idle — away",
+      dnd: "Do not disturb — desktop",
+      offline: "Offline"
+    };
+
+    async function fetchDiscordStatus() {
+      try {
+        const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+        const { data, success } = await res.json();
+        if (!success) return;
+
+        const user = data.discord_user;
+        const avatarUrl = user.avatar
+          ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`
+          : `https://cdn.discordapp.com/embed/avatars/0.png`;
+
+        document.getElementById("discord-pfp").src = avatarUrl;
+        document.getElementById("main-avatar").src = avatarUrl;
+        document.getElementById("nav-avatar").src = avatarUrl;
+        document.getElementById("discord-name").textContent = user.global_name || "Nino";
+        document.getElementById("discord-tag").textContent = `@${user.username || "Ninwwo"}`;
+
+        const status = data.discord_status || "offline";
+        document.getElementById("discord-dot").style.background = statusColors[status];
+
+        const playing = data.activities.find(a => a.type === 0);
+        if (playing) {
+          document.getElementById("discord-activity").textContent = `Playing ${playing.name}`;
+        } else if (data.listening_to_spotify) {
+          document.getElementById("discord-activity").textContent = `Listening to ${data.spotify.song}`;
+        } else {
+          document.getElementById("discord-activity").textContent = statusLabels[status];
+        }
+      } catch (err) {
+        console.log("Lanyard fetch skipped:", err);
+      }
+    }
+
+    fetchDiscordStatus();
+    setInterval(fetchDiscordStatus, 30000);
+  </script>
+</body>
+</html>
