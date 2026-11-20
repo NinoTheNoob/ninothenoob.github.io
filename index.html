@@ -336,7 +336,7 @@
     }
 
     .spotify-widget {
-      display: none; /* Auto-shows when listening to Spotify */
+      display: none;
       margin-top: 16px;
       padding: 12px 14px;
       background: rgba(15, 28, 36, 0.55);
@@ -379,7 +379,6 @@
       display: block;
     }
 
-    /* Center vinyl spindle hole */
     .vinyl-disc::after {
       content: "";
       position: absolute;
@@ -448,7 +447,7 @@
       transform: translateY(-1px);
     }
 
-    /* Tech Stack & Games Grid (Bottom Left - 6 Items in One Line) */
+    /* Tech Stack & Games Grid */
     .icon-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -658,7 +657,7 @@
         </div>
       </section>
 
-      <!-- Live Discord Presence + Real-Time Spotify Vinyl Card -->
+      <!-- Live Discord Presence + Animated Avatar & Vinyl Support -->
       <section class="glass-panel" id="discord">
         <h3 class="section-heading">Discord Presence</h3>
         <div class="discord-box">
@@ -673,7 +672,7 @@
           </div>
         </div>
 
-        <!-- Spinning Vinyl Spotify Player (auto-updates live without refreshing!) -->
+        <!-- Spinning Vinyl Spotify Widget -->
         <div class="spotify-widget" id="spotify-widget">
           <div class="spotify-left">
             <div class="vinyl-disc">
@@ -784,7 +783,7 @@
     <span>&copy; 2026 Nino</span>
   </footer>
 
-  <!-- Real-Time Lanyard WebSocket (Updates Discord & Spotify live with zero page refresh) -->
+  <!-- Real-Time Lanyard WebSocket with Animated Avatar Support -->
   <script>
     const DISCORD_USER_ID = "1519019638661451897";
 
@@ -806,8 +805,11 @@
       if (!data || !data.discord_user) return;
 
       const user = data.discord_user;
+      
+      // Automatically support animated avatars (.gif) or static (.png)
+      const avatarExt = user.avatar && user.avatar.startsWith("a_") ? "gif" : "png";
       const avatarUrl = user.avatar
-        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${avatarExt}?size=256`
         : `https://cdn.discordapp.com/embed/avatars/0.png`;
 
       document.getElementById("discord-pfp").src = avatarUrl;
@@ -819,7 +821,6 @@
       const status = data.discord_status || "offline";
       document.getElementById("discord-dot").style.background = statusColors[status];
 
-      // Update game / status text
       const playing = data.activities ? data.activities.find(a => a.type === 0) : null;
       if (playing) {
         document.getElementById("discord-activity").textContent = `Playing ${playing.name}`;
@@ -827,7 +828,6 @@
         document.getElementById("discord-activity").textContent = statusLabels[status];
       }
 
-      // Update Spinning Vinyl Spotify Widget
       const spotifyWidget = document.getElementById("spotify-widget");
       if (data.listening_to_spotify && data.spotify) {
         const sp = data.spotify;
@@ -841,7 +841,6 @@
       }
     }
 
-    // Connect to Lanyard WebSocket for instant real-time updates
     function connectLanyardWebSocket() {
       const ws = new WebSocket("wss://api.lanyard.rest/socket");
       let heartbeatInterval;
@@ -849,7 +848,6 @@
       ws.onmessage = (event) => {
         const payload = JSON.parse(event.data);
 
-        // Op 1: Hello -> send heartbeat & subscribe to your user ID
         if (payload.op === 1) {
           ws.send(JSON.stringify({
             op: 2,
@@ -863,7 +861,6 @@
           }, payload.d.heartbeat_interval);
         }
 
-        // Op 0: Event (INIT_STATE or PRESENCE_UPDATE)
         if (payload.op === 0 && (payload.t === "INIT_STATE" || payload.t === "PRESENCE_UPDATE")) {
           updatePresenceUI(payload.d);
         }
@@ -871,7 +868,7 @@
 
       ws.onclose = () => {
         clearInterval(heartbeatInterval);
-        setTimeout(connectLanyardWebSocket, 3000); // Auto-reconnect if dropped
+        setTimeout(connectLanyardWebSocket, 3000);
       };
     }
 
