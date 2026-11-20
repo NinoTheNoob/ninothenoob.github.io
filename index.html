@@ -24,6 +24,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      scroll-behavior: smooth;
     }
 
     body {
@@ -98,7 +99,7 @@
 
     .nav-socials {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .nav-socials a {
@@ -327,23 +328,23 @@
       color: #a5f3fc;
     }
 
-    /* Tech Stack & Games Grid (Bottom Left) */
+    /* Tech Stack & Games Grid (Bottom Left - 6 Items in One Line) */
     .icon-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 10px;
+      gap: 8px;
     }
 
     .icon-tile {
       background: var(--glass-card);
       border: 1px solid var(--glass-border);
-      border-radius: 14px;
-      padding: 13px 6px;
+      border-radius: 12px;
+      padding: 12px 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 7px;
+      gap: 6px;
       text-decoration: none;
       color: var(--text-main);
       transition: all 0.2s ease;
@@ -354,19 +355,20 @@
       transform: translateY(-3px);
     }
 
-    .icon-tile i, .icon-tile svg {
-      font-size: 1.2rem;
-      width: 20px;
-      height: 20px;
-      opacity: 0.92;
+    .icon-tile i {
+      font-size: 1.1rem;
+      opacity: 0.9;
     }
 
     .icon-tile span {
-      font-size: 0.64rem;
+      font-size: 0.6rem;
       color: var(--text-muted);
       font-weight: 500;
       text-align: center;
-      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
     }
 
     /* Right Column Highlight Cards */
@@ -476,10 +478,11 @@
     </div>
 
     <div class="nav-socials">
-      <a href="https://discord.com/users/1519019638661451897" target="_blank" title="Discord (@Ninwwo)"><i class="fa-brands fa-discord"></i></a>
+      <a href="https://discord.com/users/1519019638661451897" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
       <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
       <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" title="Steam"><i class="fa-brands fa-steam"></i></a>
       <a href="https://github.com/NinoTheNoob" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" title="Roblox"><i class="fa-solid fa-gamepad"></i></a>
     </div>
   </nav>
 
@@ -551,16 +554,16 @@
         </div>
       </section>
 
-      <!-- Tech Stack & Main Games -->
+      <!-- Tech Stack & Games One-Liner (Monochrome) -->
       <section class="glass-panel" id="stack">
         <h3 class="section-heading">Tech Stack &amp; Games</h3>
         <div class="icon-grid">
           <div class="icon-tile" title="Rust">
-            <i class="fa-brands fa-rust"></i>
+            <i class="fa-solid fa-gear"></i>
             <span>Rust</span>
           </div>
           <div class="icon-tile" title="Python">
-            <i class="fa-brands fa-python"></i>
+            <i class="fa-solid fa-code"></i>
             <span>Python</span>
           </div>
           <div class="icon-tile" title="Minecraft">
@@ -571,10 +574,10 @@
             <i class="fa-solid fa-robot"></i>
             <span>Titanfall 2</span>
           </div>
-          <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="icon-tile" title="Roblox">
+          <div class="icon-tile" title="Roblox">
             <i class="fa-solid fa-gamepad"></i>
             <span>Roblox</span>
-          </a>
+          </div>
           <div class="icon-tile" title="Rainbow Six Siege">
             <i class="fa-solid fa-crosshairs"></i>
             <span>R6 Siege</span>
@@ -646,8 +649,6 @@
 
   <!-- Live Discord Presence Script (via Lanyard API) -->
   <script>
-    // Your Discord ID is already plugged in!
-    // Join discord.gg/lanyard once so your live PFP, status & current game show up automatically.
     const DISCORD_USER_ID = "1519019638661451897";
 
     const statusColors = {
