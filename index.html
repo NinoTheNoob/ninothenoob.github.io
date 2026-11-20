@@ -18,7 +18,6 @@
       --text-main: #f4f8fb;
       --text-muted: rgba(235, 245, 252, 0.74);
       --accent: #7dd3fc;
-      --spotify-green: #1db954;
     }
 
     * {
@@ -329,125 +328,7 @@
       color: #a5f3fc;
     }
 
-    /* Live Spotify Spinning Vinyl Widget */
-    @keyframes spinVinyl {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .spotify-widget {
-      display: none;
-      margin-top: 16px;
-      padding: 12px 14px;
-      background: rgba(15, 28, 36, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 14px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      transition: all 0.3s ease;
-    }
-
-    .spotify-widget.active {
-      display: flex;
-    }
-
-    .spotify-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .vinyl-disc {
-      position: relative;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      background: radial-gradient(circle, #181818 0%, #090909 65%, #222 100%);
-      padding: 6px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
-      animation: spinVinyl 7s linear infinite;
-    }
-
-    .vinyl-disc img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .vinyl-disc::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 11px;
-      height: 11px;
-      background: #132530;
-      border: 2px solid rgba(255, 255, 255, 0.45);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .track-meta {
-      min-width: 0;
-    }
-
-    .track-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.62rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--spotify-green);
-      margin-bottom: 2px;
-    }
-
-    .track-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .track-artist {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .listen-btn {
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 13px;
-      border-radius: 999px;
-      background: rgba(29, 185, 84, 0.18);
-      border: 1px solid rgba(29, 185, 84, 0.45);
-      color: #dcfce7;
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .listen-btn:hover {
-      background: var(--spotify-green);
-      color: #07190e;
-      transform: translateY(-1px);
-    }
-
-    /* Tech Stack & Games Grid */
+    /* Tech Stack & Games Grid (Bottom Left - 6 Items in One Line) */
     .icon-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -657,7 +538,7 @@
         </div>
       </section>
 
-      <!-- Live Discord Presence + Animated Avatar & Vinyl Support -->
+      <!-- Live Discord Presence Card -->
       <section class="glass-panel" id="discord">
         <h3 class="section-heading">Discord Presence</h3>
         <div class="discord-box">
@@ -668,25 +549,8 @@
           <div class="discord-details">
             <h4 id="discord-name">Nino</h4>
             <div class="handle" id="discord-tag">@Ninwwo</div>
-            <div class="activity" id="discord-activity">Connecting...</div>
+            <div class="activity" id="discord-activity">Offline — desktop</div>
           </div>
-        </div>
-
-        <!-- Spinning Vinyl Spotify Widget -->
-        <div class="spotify-widget" id="spotify-widget">
-          <div class="spotify-left">
-            <div class="vinyl-disc">
-              <img src="" alt="Album Art" id="spotify-art">
-            </div>
-            <div class="track-meta">
-              <div class="track-badge"><i class="fa-brands fa-spotify"></i> Listening to Spotify</div>
-              <div class="track-title" id="spotify-song">Song Title</div>
-              <div class="track-artist" id="spotify-artist">Artist Name</div>
-            </div>
-          </div>
-          <a href="#" target="_blank" class="listen-btn" id="spotify-link">
-            <i class="fa-solid fa-headphones"></i> Listen Along
-          </a>
         </div>
       </section>
 
@@ -783,7 +647,7 @@
     <span>&copy; 2026 Nino</span>
   </footer>
 
-  <!-- Real-Time Lanyard WebSocket with Animated Avatar Support -->
+  <!-- Live Discord Presence Script (via Lanyard API) -->
   <script>
     const DISCORD_USER_ID = "1519019638661451897";
 
@@ -801,78 +665,41 @@
       offline: "Offline"
     };
 
-    function updatePresenceUI(data) {
-      if (!data || !data.discord_user) return;
+    async function fetchDiscordStatus() {
+      try {
+        const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+        const { data, success } = await res.json();
+        if (!success) return;
 
-      const user = data.discord_user;
-      
-      // Automatically support animated avatars (.gif) or static (.png)
-      const avatarExt = user.avatar && user.avatar.startsWith("a_") ? "gif" : "png";
-      const avatarUrl = user.avatar
-        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${avatarExt}?size=256`
-        : `https://cdn.discordapp.com/embed/avatars/0.png`;
+        const user = data.discord_user;
+        const avatarUrl = user.avatar
+          ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`
+          : `https://cdn.discordapp.com/embed/avatars/0.png`;
 
-      document.getElementById("discord-pfp").src = avatarUrl;
-      document.getElementById("main-avatar").src = avatarUrl;
-      document.getElementById("nav-avatar").src = avatarUrl;
-      document.getElementById("discord-name").textContent = user.global_name || "Nino";
-      document.getElementById("discord-tag").textContent = `@${user.username || "Ninwwo"}`;
+        document.getElementById("discord-pfp").src = avatarUrl;
+        document.getElementById("main-avatar").src = avatarUrl;
+        document.getElementById("nav-avatar").src = avatarUrl;
+        document.getElementById("discord-name").textContent = user.global_name || "Nino";
+        document.getElementById("discord-tag").textContent = `@${user.username || "Ninwwo"}`;
 
-      const status = data.discord_status || "offline";
-      document.getElementById("discord-dot").style.background = statusColors[status];
+        const status = data.discord_status || "offline";
+        document.getElementById("discord-dot").style.background = statusColors[status];
 
-      const playing = data.activities ? data.activities.find(a => a.type === 0) : null;
-      if (playing) {
-        document.getElementById("discord-activity").textContent = `Playing ${playing.name}`;
-      } else {
-        document.getElementById("discord-activity").textContent = statusLabels[status];
-      }
-
-      const spotifyWidget = document.getElementById("spotify-widget");
-      if (data.listening_to_spotify && data.spotify) {
-        const sp = data.spotify;
-        document.getElementById("spotify-art").src = sp.album_art_url;
-        document.getElementById("spotify-song").textContent = sp.song;
-        document.getElementById("spotify-artist").textContent = sp.artist;
-        document.getElementById("spotify-link").href = `https://open.spotify.com/track/${sp.track_id}`;
-        spotifyWidget.classList.add("active");
-      } else {
-        spotifyWidget.classList.remove("active");
+        const playing = data.activities.find(a => a.type === 0);
+        if (playing) {
+          document.getElementById("discord-activity").textContent = `Playing ${playing.name}`;
+        } else if (data.listening_to_spotify) {
+          document.getElementById("discord-activity").textContent = `Listening to ${data.spotify.song}`;
+        } else {
+          document.getElementById("discord-activity").textContent = statusLabels[status];
+        }
+      } catch (err) {
+        console.log("Lanyard fetch skipped:", err);
       }
     }
 
-    function connectLanyardWebSocket() {
-      const ws = new WebSocket("wss://api.lanyard.rest/socket");
-      let heartbeatInterval;
-
-      ws.onmessage = (event) => {
-        const payload = JSON.parse(event.data);
-
-        if (payload.op === 1) {
-          ws.send(JSON.stringify({
-            op: 2,
-            d: { subscribe_to_id: DISCORD_USER_ID }
-          }));
-
-          heartbeatInterval = setInterval(() => {
-            if (ws.readyState === WebSocket.OPEN) {
-              ws.send(JSON.stringify({ op: 3 }));
-            }
-          }, payload.d.heartbeat_interval);
-        }
-
-        if (payload.op === 0 && (payload.t === "INIT_STATE" || payload.t === "PRESENCE_UPDATE")) {
-          updatePresenceUI(payload.d);
-        }
-      };
-
-      ws.onclose = () => {
-        clearInterval(heartbeatInterval);
-        setTimeout(connectLanyardWebSocket, 3000);
-      };
-    }
-
-    connectLanyardWebSocket();
+    fetchDiscordStatus();
+    setInterval(fetchDiscordStatus, 30000);
   </script>
 </body>
 </html>
