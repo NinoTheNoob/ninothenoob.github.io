@@ -9,7 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-image: url('https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=2400&q=85');
+      --bg-night: url('https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=2400&q=85');
+      --bg-day: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2400&q=85');
+      --bg-image: var(--bg-night);
+      --overlay-gradient: radial-gradient(circle at 50% 20%, rgba(10, 17, 26, 0.35) 0%, rgba(5, 8, 14, 0.86) 100%),
+                          linear-gradient(180deg, rgba(6, 11, 18, 0.45) 0%, rgba(4, 7, 12, 0.85) 100%);
       --glass-bg: rgba(13, 19, 28, 0.56);
       --glass-bg-hover: rgba(18, 27, 40, 0.68);
       --glass-border: rgba(255, 255, 255, 0.09);
@@ -24,6 +28,14 @@
       --radius-md: 14px;
       --radius-sm: 10px;
       --blur: blur(18px);
+    }
+
+    body.day-mode {
+      --bg-image: var(--bg-day);
+      --overlay-gradient: radial-gradient(circle at 50% 18%, rgba(14, 28, 38, 0.25) 0%, rgba(7, 14, 22, 0.78) 100%),
+                          linear-gradient(180deg, rgba(12, 26, 36, 0.32) 0%, rgba(6, 12, 20, 0.82) 100%);
+      --glass-bg: rgba(14, 24, 34, 0.52);
+      --glass-bg-hover: rgba(20, 34, 48, 0.64);
     }
 
     * {
@@ -42,23 +54,20 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Scenic Dark Nature Wallpaper + Vignette */
+    /* Dynamic Day/Night Scenic Wallpaper */
     .wallpaper {
       position: fixed;
       inset: 0;
       z-index: 0;
-      background-image:
-        radial-gradient(circle at 50% 20%, rgba(10, 17, 26, 0.35) 0%, rgba(5, 8, 14, 0.86) 100%),
-        linear-gradient(180deg, rgba(6, 11, 18, 0.45) 0%, rgba(4, 7, 12, 0.85) 100%),
-        var(--bg-image);
+      background-image: var(--overlay-gradient), var(--bg-image);
       background-size: cover;
       background-position: center;
       transform: scale(1.03);
-      transition: transform 0.8s ease-out;
+      transition: background-image 1s ease-in-out, transform 0.8s ease-out;
     }
 
-    /* Cursor Trail Canvas */
-    #trail-canvas {
+    /* Fullscreen Weather & Cursor Trail Canvas */
+    #fx-canvas {
       position: fixed;
       inset: 0;
       z-index: 1;
@@ -70,13 +79,13 @@
       position: relative;
       z-index: 2;
       min-height: 100vh;
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 32px 24px 80px;
+      padding: 28px 24px 80px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 22px;
+      gap: 20px;
     }
 
     /* Glass Base & 3D Tilt Spotlight Card */
@@ -152,8 +161,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 10px;
-      margin-bottom: 2px;
+      gap: 9px;
     }
 
     .clock-row {
@@ -164,7 +172,7 @@
 
     .digital-clock {
       font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(2.8rem, 5vw, 4.1rem);
+      font-size: clamp(2.7rem, 4.8vw, 3.9rem);
       font-weight: 600;
       letter-spacing: -0.04em;
       color: var(--text-primary);
@@ -174,7 +182,7 @@
 
     .clock-seconds {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 500;
       color: var(--accent);
       opacity: 0.9;
@@ -186,7 +194,7 @@
       gap: 10px;
       flex-wrap: wrap;
       justify-content: center;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       color: var(--text-secondary);
     }
 
@@ -250,7 +258,7 @@
     .search-wrapper {
       width: 100%;
       max-width: 640px;
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     .search-form {
@@ -334,14 +342,14 @@
     /* 2. Bento Grid Layout */
     .bento-grid {
       display: grid;
-      grid-template-columns: 1.25fr 1fr 0.92fr;
+      grid-template-columns: 1.25fr 1.05fr 0.92fr;
       gap: 18px;
     }
 
     /* Quick Launch Dock (Top Full-Span Card) */
     .dock-card {
       grid-column: 1 / -1;
-      padding: 14px 18px;
+      padding: 13px 18px;
     }
 
     .dock-row {
@@ -355,7 +363,7 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      padding: 12px 14px;
+      padding: 11px 14px;
       border-radius: var(--radius-md);
       background: rgba(255, 255, 255, 0.035);
       border: 1px solid rgba(255, 255, 255, 0.06);
@@ -385,14 +393,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .card-title {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -405,9 +413,9 @@
       color: var(--accent);
     }
 
-    /* Live Discord & Spotify Card */
+    /* Left Card: Live Discord, Spotify & Squad/Steam Friends */
     .presence-card {
-      padding: 20px;
+      padding: 18px 20px;
       display: flex;
       flex-direction: column;
     }
@@ -415,15 +423,15 @@
     .discord-profile {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding-bottom: 14px;
+      gap: 13px;
+      padding-bottom: 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     }
 
     .avatar-wrap {
       position: relative;
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       flex-shrink: 0;
     }
 
@@ -438,8 +446,8 @@
 
     .status-dot {
       position: absolute;
-      bottom: 1px;
-      right: 1px;
+      bottom: 0;
+      right: 0;
       width: 13px;
       height: 13px;
       border-radius: 50%;
@@ -465,7 +473,7 @@
     }
 
     .discord-username {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 600;
       color: var(--text-primary);
       white-space: nowrap;
@@ -474,7 +482,7 @@
     }
 
     .status-pill {
-      font-size: 0.69rem;
+      font-size: 0.68rem;
       font-weight: 600;
       padding: 2px 8px;
       border-radius: 999px;
@@ -484,9 +492,9 @@
     }
 
     .discord-activity {
-      font-size: 0.81rem;
+      font-size: 0.8rem;
       color: var(--text-secondary);
-      margin-top: 3px;
+      margin-top: 2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -497,28 +505,28 @@
       font-weight: 500;
     }
 
-    /* Spotify Vinyl Widget + Live Progress Bar + Track/Lyrics Links */
+    /* Spotify Vinyl Widget */
     .spotify-section {
-      margin-top: 14px;
-      padding: 13px;
+      margin-top: 12px;
+      padding: 11px 12px;
       border-radius: var(--radius-md);
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      gap: 9px;
     }
 
     .spotify-top-row {
       display: flex;
       align-items: center;
-      gap: 13px;
+      gap: 12px;
     }
 
     .vinyl-disc {
       position: relative;
-      width: 54px;
-      height: 54px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       background: radial-gradient(circle, #1e293b 28%, #090d14 30%, #111827 55%, #070a0f 75%, #1e293b 100%);
       border: 1.5px solid rgba(255, 255, 255, 0.14);
@@ -534,8 +542,8 @@
     }
 
     .vinyl-art {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       object-fit: cover;
       border: 1.5px solid rgba(125, 211, 252, 0.5);
@@ -543,8 +551,8 @@
 
     .vinyl-spindle {
       position: absolute;
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       background: #0d131c;
       border: 1px solid rgba(255, 255, 255, 0.35);
@@ -565,14 +573,14 @@
       align-items: center;
       justify-content: space-between;
       gap: 6px;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .spotify-badge {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -587,11 +595,11 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 0.69rem;
+      font-size: 0.67rem;
       font-weight: 500;
       color: var(--accent);
       text-decoration: none;
-      padding: 2px 7px;
+      padding: 1px 7px;
       border-radius: 6px;
       background: rgba(125, 211, 252, 0.1);
       border: 1px solid rgba(125, 211, 252, 0.22);
@@ -631,7 +639,7 @@
 
     .track-title-link {
       display: block;
-      font-size: 0.9rem;
+      font-size: 0.87rem;
       font-weight: 600;
       color: var(--text-primary);
       text-decoration: none;
@@ -648,19 +656,18 @@
     }
 
     .track-artist {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-secondary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 1px;
     }
 
     /* Spotify Progress Bar */
     .spotify-progress-wrap {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
     }
 
     .spotify-progress-wrap.hidden {
@@ -688,14 +695,147 @@
       display: flex;
       justify-content: space-between;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.67rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
+    }
+
+    /* Steam / Squad Online Status Section */
+    .squad-section {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .squad-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .squad-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .squad-add-btn {
+      background: rgba(125, 211, 252, 0.1);
+      border: 1px solid rgba(125, 211, 252, 0.25);
+      color: var(--accent);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .squad-add-btn:hover {
+      background: var(--accent);
+      color: #061018;
+    }
+
+    .squad-add-form {
+      display: none;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .squad-add-form.open {
+      display: flex;
+    }
+
+    .squad-input {
+      flex: 1;
+      background: rgba(8, 12, 19, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      padding: 4px 8px;
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      outline: none;
+    }
+
+    .squad-input:focus {
+      border-color: var(--accent);
+    }
+
+    .squad-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 92px;
+      overflow-y: auto;
+    }
+
+    .squad-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.76rem;
+      padding: 4px 6px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .squad-friend-left {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .mini-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .squad-friend-name {
+      font-weight: 500;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .squad-friend-game {
+      font-size: 0.7rem;
+      color: var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 135px;
+    }
+
+    .squad-remove {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      padding: 0 3px;
+    }
+
+    .squad-remove:hover {
+      color: #ef4444;
     }
 
     /* Recently Played Drawer */
     .recent-drawer-wrap {
       margin-top: auto;
-      padding-top: 12px;
+      padding-top: 10px;
     }
 
     .drawer-toggle {
@@ -703,12 +843,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
+      padding: 7px 11px;
       border-radius: var(--radius-sm);
       background: rgba(255, 255, 255, 0.035);
       border: 1px solid rgba(255, 255, 255, 0.06);
       color: var(--text-secondary);
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -733,34 +873,29 @@
       transition: max-height 0.3s cubic-bezier(0.22, 1, 0.36, 1), margin-top 0.25s ease;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
     }
 
     .recent-list.open {
-      max-height: 185px;
-      margin-top: 9px;
+      max-height: 165px;
+      margin-top: 8px;
     }
 
     .recent-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 6px 9px;
+      gap: 9px;
+      padding: 5px 8px;
       border-radius: var(--radius-sm);
       background: rgba(255, 255, 255, 0.025);
       border: 1px solid rgba(255, 255, 255, 0.04);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       text-decoration: none;
-      transition: border-color 0.2s ease;
-    }
-
-    .recent-item:hover {
-      border-color: rgba(125, 211, 252, 0.35);
     }
 
     .recent-item img {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 6px;
       object-fit: cover;
       flex-shrink: 0;
@@ -781,123 +916,19 @@
 
     .recent-item-artist {
       color: var(--text-muted);
-      font-size: 0.71rem;
+      font-size: 0.69rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* Center Column: Pomodoro Focus Timer + Scratchpad */
+    /* Center Column: Scratchpad + Base64/URL Encoder-Decoder */
     .center-column {
       display: flex;
       flex-direction: column;
       gap: 18px;
     }
 
-    .pomo-card {
-      padding: 18px 20px;
-    }
-
-    .pomo-modes {
-      display: inline-flex;
-      background: rgba(8, 12, 19, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 999px;
-      padding: 2px;
-    }
-
-    .pomo-mode-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .pomo-mode-btn.active {
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .pomo-main {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin: 4px 0 12px;
-    }
-
-    .pomo-display {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 2.15rem;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      color: var(--text-primary);
-      text-shadow: 0 0 22px rgba(125, 211, 252, 0.2);
-    }
-
-    .pomo-controls {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .pomo-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      padding: 7px 13px;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(125, 211, 252, 0.3);
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .pomo-btn:hover {
-      background: var(--accent);
-      color: #061018;
-    }
-
-    .pomo-btn.secondary {
-      padding: 7px 9px;
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(255, 255, 255, 0.08);
-      color: var(--text-secondary);
-    }
-
-    .pomo-btn.secondary:hover {
-      border-color: rgba(125, 211, 252, 0.35);
-      color: var(--accent);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .pomo-bar-bg {
-      width: 100%;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      overflow: hidden;
-    }
-
-    .pomo-bar-fill {
-      height: 100%;
-      width: 100%;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 10px var(--accent-glow);
-      transition: width 0.4s ease;
-    }
-
-    /* Quick Scratchpad Card */
     .notes-card {
       padding: 18px 20px;
       flex: 1;
@@ -915,7 +946,7 @@
     .scratchpad-area {
       flex: 1;
       width: 100%;
-      min-height: 112px;
+      min-height: 110px;
       resize: none;
       background: rgba(8, 12, 19, 0.42);
       border: 1px solid rgba(255, 255, 255, 0.06);
@@ -923,7 +954,7 @@
       padding: 11px 13px;
       color: var(--text-primary);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.81rem;
+      font-size: 0.8rem;
       line-height: 1.55;
       outline: none;
       transition: border-color 0.2s ease, background 0.2s ease;
@@ -936,6 +967,95 @@
 
     .scratchpad-area::placeholder {
       color: var(--text-muted);
+    }
+
+    /* Base64 / URL Encoder-Decoder Card */
+    .codec-card {
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .codec-modes {
+      display: inline-flex;
+      background: rgba(8, 12, 19, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 999px;
+      padding: 2px;
+    }
+
+    .codec-mode-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.69rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .codec-mode-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .codec-box {
+      width: 100%;
+      height: 66px;
+      resize: none;
+      background: rgba(8, 12, 19, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-sm);
+      padding: 9px 11px;
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.77rem;
+      line-height: 1.45;
+      outline: none;
+      margin-bottom: 9px;
+    }
+
+    .codec-box:focus {
+      border-color: rgba(125, 211, 252, 0.4);
+    }
+
+    .codec-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .codec-btn {
+      flex: 1;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(125, 211, 252, 0.26);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .codec-btn:hover {
+      background: var(--accent);
+      color: #061018;
+    }
+
+    .codec-btn.secondary {
+      flex: 0 0 auto;
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.09);
+      color: var(--text-secondary);
+    }
+
+    .codec-btn.secondary:hover {
+      border-color: rgba(125, 211, 252, 0.35);
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     /* Right Column Stacked Category Cards */
@@ -988,7 +1108,7 @@
       flex-shrink: 0;
     }
 
-    /* Footer Controls: SFX Pill & Collapsible Stats Tab */
+    /* Footer Controls: SFX, Day/Night Theme & Collapsible Stats/API Monitor */
     .footer-bar {
       position: fixed;
       bottom: 18px;
@@ -1001,19 +1121,26 @@
       pointer-events: none;
     }
 
+    .footer-left-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: auto;
+    }
+
     .footer-pill {
       pointer-events: auto;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
+      gap: 7px;
+      padding: 8px 13px;
       border-radius: 999px;
       background: rgba(13, 19, 28, 0.72);
       backdrop-filter: var(--blur);
       -webkit-backdrop-filter: var(--blur);
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: var(--text-secondary);
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       font-weight: 500;
       cursor: pointer;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
@@ -1038,7 +1165,7 @@
       box-shadow: none;
     }
 
-    /* Collapsible Stats Pill Tab */
+    /* Collapsible Stats & API Status Monitor Pill Tab */
     .stats-container {
       pointer-events: auto;
       display: flex;
@@ -1050,11 +1177,11 @@
     .stats-popover {
       display: none;
       flex-direction: column;
-      gap: 10px;
-      min-width: 235px;
+      gap: 9px;
+      min-width: 255px;
       padding: 14px 16px;
       border-radius: var(--radius-md);
-      background: rgba(12, 18, 28, 0.85);
+      background: rgba(12, 18, 28, 0.88);
       backdrop-filter: var(--blur);
       -webkit-backdrop-filter: var(--blur);
       border: 1px solid rgba(125, 211, 252, 0.25);
@@ -1075,7 +1202,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       color: var(--text-secondary);
     }
 
@@ -1084,6 +1211,26 @@
       font-weight: 600;
       color: var(--accent);
     }
+
+    .api-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+
+    .api-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #64748b;
+    }
+
+    .api-dot.ok { background: #22c55e; box-shadow: 0 0 7px rgba(34, 197, 94, 0.6); }
+    .api-dot.warn { background: #eab308; box-shadow: 0 0 7px rgba(234, 179, 8, 0.6); }
+    .api-dot.down { background: #ef4444; box-shadow: 0 0 7px rgba(239, 68, 68, 0.6); }
 
     /* Responsive Breakpoints */
     @media (max-width: 980px) {
@@ -1117,7 +1264,7 @@
 </head>
 <body>
   <div class="wallpaper"></div>
-  <canvas id="trail-canvas"></canvas>
+  <canvas id="fx-canvas"></canvas>
 
   <main class="app-shell">
     <!-- 1. Hero Header, Live Weather Pill & Search -->
@@ -1131,7 +1278,7 @@
         <div class="dot-sep"></div>
         <div id="date-text">Loading date...</div>
         <div class="dot-sep"></div>
-        <div class="weather-pill" id="weather-pill" title="Live local weather via Open-Meteo">
+        <div class="weather-pill" id="weather-pill" title="Live weather & reactive backdrop">
           <svg id="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
           <span class="weather-temp" id="weather-temp">--°C</span>
           <span class="weather-desc" id="weather-desc">Syncing...</span>
@@ -1194,7 +1341,7 @@
         </div>
       </div>
 
-      <!-- Left Card: Live Discord & Spotify via Lanyard -->
+      <!-- Left Card: Live Discord, Spotify & Steam/Squad Friends Online Status -->
       <div class="bento-card presence-card">
         <div class="card-inner" style="display:flex;flex-direction:column;">
           <div class="card-header">
@@ -1219,7 +1366,7 @@
             </div>
           </div>
 
-          <!-- Spinning Vinyl Spotify Player + Progress Bar + Track/Lyrics Links -->
+          <!-- Spinning Vinyl Spotify Player -->
           <div class="spotify-section">
             <div class="spotify-top-row">
               <div class="vinyl-disc" id="vinyl-disc">
@@ -1231,7 +1378,7 @@
                   <div class="spotify-badge idle" id="spotify-badge">
                     <span>Spotify Idle</span>
                   </div>
-                  <a id="spotify-lyrics-link" class="lyrics-link hidden track-click sfx-item" target="_blank" rel="noopener" title="Search track lyrics">
+                  <a id="spotify-lyrics-link" class="lyrics-link hidden track-click sfx-item" target="_blank" rel="noopener">
                     Lyrics ↗
                   </a>
                 </div>
@@ -1240,7 +1387,6 @@
               </div>
             </div>
 
-            <!-- Real-Time Spotify Progress Bar -->
             <div class="spotify-progress-wrap hidden" id="spotify-progress-wrap">
               <div class="spotify-bar-bg">
                 <div class="spotify-bar-fill" id="spotify-bar-fill"></div>
@@ -1252,7 +1398,23 @@
             </div>
           </div>
 
-          <!-- Recently Played Drawer (Last 3 Tracks in localStorage) -->
+          <!-- Steam & Squad Friends Online Status (Live via Lanyard) -->
+          <div class="squad-section">
+            <div class="squad-header">
+              <span class="squad-title">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Steam / Squad Online
+              </span>
+              <button type="button" class="squad-add-btn sfx-item" id="squad-toggle-add">+ Add ID</button>
+            </div>
+            <form class="squad-add-form" id="squad-add-form">
+              <input type="text" class="squad-input" id="squad-id-input" placeholder="Friend's Discord ID..." />
+              <button type="submit" class="squad-add-btn sfx-item">Add</button>
+            </form>
+            <div class="squad-list" id="squad-list"></div>
+          </div>
+
+          <!-- Recently Played Drawer -->
           <div class="recent-drawer-wrap">
             <button type="button" class="drawer-toggle sfx-item track-click" id="recent-toggle">
               <span>Recently Played (Last 3)</span>
@@ -1263,39 +1425,9 @@
         </div>
       </div>
 
-      <!-- Center Column: Pomodoro Focus Timer + Scratchpad -->
+      <!-- Center Column: Quick Scratchpad + Base64 / URL Encoder-Decoder -->
       <div class="center-column">
-        <!-- Pomodoro / Focus Timer Widget -->
-        <div class="bento-card pomo-card">
-          <div class="card-inner">
-            <div class="card-header">
-              <div class="card-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                Focus Timer
-              </div>
-              <div class="pomo-modes">
-                <button type="button" class="pomo-mode-btn active sfx-item" data-minutes="25" id="mode-focus">25m Focus</button>
-                <button type="button" class="pomo-mode-btn sfx-item" data-minutes="5" id="mode-break">5m Break</button>
-              </div>
-            </div>
-
-            <div class="pomo-main">
-              <div class="pomo-display" id="pomo-display">25:00</div>
-              <div class="pomo-controls">
-                <button type="button" class="pomo-btn sfx-item" id="pomo-start">Start</button>
-                <button type="button" class="pomo-btn secondary sfx-item" id="pomo-reset" title="Reset timer">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                </button>
-              </div>
-            </div>
-
-            <div class="pomo-bar-bg">
-              <div class="pomo-bar-fill" id="pomo-bar-fill"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick Scratchpad Card -->
+        <!-- Scratchpad Card -->
         <div class="bento-card notes-card">
           <div class="card-inner" style="display:flex;flex-direction:column;">
             <div class="card-header">
@@ -1311,6 +1443,33 @@
               placeholder="// Quick notes, links, or to-dos...&#10;// Auto-saves locally across new tabs."
               spellcheck="false"
             ></textarea>
+          </div>
+        </div>
+
+        <!-- Base64 / URL Encoder-Decoder Card -->
+        <div class="bento-card codec-card">
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Encoder / Decoder
+              </div>
+              <div class="codec-modes">
+                <button type="button" class="codec-mode-btn active sfx-item" data-codec="base64">Base64</button>
+                <button type="button" class="codec-mode-btn sfx-item" data-codec="url">URL</button>
+              </div>
+            </div>
+            <textarea
+              id="codec-input"
+              class="codec-box"
+              placeholder="Paste text, Base64, or URL to transform..."
+              spellcheck="false"
+            ></textarea>
+            <div class="codec-actions">
+              <button type="button" class="codec-btn sfx-item" id="btn-encode">Encode</button>
+              <button type="button" class="codec-btn sfx-item" id="btn-decode">Decode</button>
+              <button type="button" class="codec-btn secondary sfx-item" id="btn-copy-codec" title="Copy output">Copy</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1380,12 +1539,18 @@
     </section>
   </main>
 
-  <!-- 3. Footer Controls: SFX Toggle & Collapsible GitHub/Click Stats Pill -->
+  <!-- 3. Footer Controls: SFX, Day/Night Shift & Collapsible Stats / API Monitor -->
   <div class="footer-bar">
-    <button type="button" class="footer-pill sfx-item" id="sfx-toggle">
-      <span class="sfx-dot" id="sfx-dot"></span>
-      <span id="sfx-label">SFX: On</span>
-    </button>
+    <div class="footer-left-pills">
+      <button type="button" class="footer-pill sfx-item" id="sfx-toggle">
+        <span class="sfx-dot" id="sfx-dot"></span>
+        <span id="sfx-label">SFX: On</span>
+      </button>
+      <button type="button" class="footer-pill sfx-item" id="theme-toggle" title="Cycle Auto / Day / Night wallpaper">
+        <svg id="theme-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Theme: Auto</span>
+      </button>
+    </div>
 
     <div class="stats-container">
       <div class="stats-popover" id="stats-popover">
@@ -1394,33 +1559,73 @@
           <a href="https://github.com/NinoTheNoob" style="color:var(--accent);text-decoration:none;font-size:0.75rem;">Profile ↗</a>
         </div>
         <div class="stat-row">
-          <span>Followers</span>
-          <span class="stat-val" id="gh-followers">—</span>
+          <span>Followers / Repos</span>
+          <span class="stat-val"><span id="gh-followers">—</span> / <span id="gh-repos">—</span></span>
         </div>
         <div class="stat-row">
-          <span>Public Repos</span>
-          <span class="stat-val" id="gh-repos">—</span>
-        </div>
-        <div class="stat-row" style="border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
           <span>Total Tile Clicks</span>
           <span class="stat-val" id="total-clicks">0</span>
+        </div>
+
+        <!-- Live API Status Monitor -->
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;margin-top:2px;display:flex;flex-direction:column;gap:6px;">
+          <div class="stat-row" style="font-size:0.71rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">
+            <span>API Status Monitor</span>
+          </div>
+          <div class="stat-row">
+            <span>GitHub API</span>
+            <span class="api-badge"><span class="api-dot" id="api-gh-dot"></span><span id="api-gh-text">Checking</span></span>
+          </div>
+          <div class="stat-row">
+            <span>Discord Gateway</span>
+            <span class="api-badge"><span class="api-dot" id="api-dc-dot"></span><span id="api-dc-text">Checking</span></span>
+          </div>
+          <div class="stat-row">
+            <span>Steam Store</span>
+            <span class="api-badge"><span class="api-dot" id="api-st-dot"></span><span id="api-st-text">Checking</span></span>
+          </div>
         </div>
       </div>
       <button type="button" class="footer-pill sfx-item" id="stats-toggle">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
-        <span>Stats</span>
+        <span>Stats &amp; API</span>
       </button>
     </div>
   </div>
 
   <script>
     /* ==========================================================
-       1. Live Clock, Date & Dynamic Greeting
+       1. Live Clock, Date, Greeting & Dynamic Day/Night Shift
        ========================================================== */
     const clockMain = document.getElementById('clock-main');
     const clockSec = document.getElementById('clock-sec');
     const dateText = document.getElementById('date-text');
     const greetingText = document.getElementById('greeting-text');
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeLabel = document.getElementById('theme-label');
+    const themeIcon = document.getElementById('theme-icon');
+
+    let themeMode = localStorage.getItem('nino_theme_mode') || 'auto'; // 'auto' | 'day' | 'night'
+
+    function applyTheme(hour) {
+      let isDay = false;
+      if (themeMode === 'day') isDay = true;
+      else if (themeMode === 'night') isDay = false;
+      else isDay = hour >= 6 && hour < 19;
+
+      document.body.classList.toggle('day-mode', isDay);
+      themeLabel.textContent = `Theme: ${themeMode.charAt(0).toUpperCase() + themeMode.slice(1)}`;
+      themeIcon.innerHTML = isDay
+        ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>'
+        : '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const order = ['auto', 'day', 'night'];
+      themeMode = order[(order.indexOf(themeMode) + 1) % order.length];
+      localStorage.setItem('nino_theme_mode', themeMode);
+      applyTheme(new Date().getHours());
+    });
 
     function updateDateTime() {
       const now = new Date();
@@ -1442,24 +1647,54 @@
         day: 'numeric',
         year: 'numeric'
       });
+
+      applyTheme(hours);
     }
     updateDateTime();
     setInterval(updateDateTime, 1000);
 
     /* ==========================================================
-       2. Live Weather Pill (Open-Meteo Keyless API)
+       2. Live Weather Pill & Weather-Reactive Backdrop State
        ========================================================== */
     const weatherTemp = document.getElementById('weather-temp');
     const weatherDesc = document.getElementById('weather-desc');
     const weatherIcon = document.getElementById('weather-icon');
+    let currentWeatherEffect = 'clear'; // 'clear' | 'cloudy' | 'rain' | 'snow'
 
     function decodeWeather(code) {
-      if (code === 0) return { label: 'Clear', icon: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>' };
-      if (code <= 3) return { label: 'Partly Cloudy', icon: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>' };
-      if (code <= 48) return { label: 'Foggy', icon: '<path d="M4 14h16M4 18h12M6 10h12"/>' };
-      if (code <= 67 || (code >= 80 && code <= 82)) return { label: 'Rain', icon: '<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6M8 14v6M12 16v6"/>' };
-      if (code <= 77) return { label: 'Snow', icon: '<path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><path d="M8 16h.01M8 20h.01M12 18h.01M12 22h.01M16 16h.01M16 20h.01"/>' };
-      return { label: 'Storm', icon: '<path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"/><polyline points="13 11 9 17 15 17 11 23"/>' };
+      if (code === 0) {
+        return {
+          label: 'Clear',
+          effect: 'clear',
+          icon: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>'
+        };
+      }
+      if (code <= 3) {
+        return {
+          label: 'Partly Cloudy',
+          effect: 'cloudy',
+          icon: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>'
+        };
+      }
+      if (code <= 48) {
+        return {
+          label: 'Foggy',
+          effect: 'cloudy',
+          icon: '<path d="M4 14h16M4 18h12M6 10h12"/>'
+        };
+      }
+      if (code <= 67 || (code >= 80 && code <= 82) || code >= 95) {
+        return {
+          label: code >= 95 ? 'Storm' : 'Rain',
+          effect: 'rain',
+          icon: '<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6M8 14v6M12 16v6"/>'
+        };
+      }
+      return {
+        label: 'Snow',
+        effect: 'snow',
+        icon: '<path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><path d="M8 16h.01M8 20h.01M12 18h.01M12 22h.01M16 16h.01M16 20h.01"/>'
+      };
     }
 
     async function loadWeather(lat, lon) {
@@ -1472,6 +1707,8 @@
           weatherTemp.textContent = `${temp}°C`;
           weatherDesc.textContent = info.label;
           weatherIcon.innerHTML = info.icon;
+          currentWeatherEffect = info.effect;
+          initWeatherParticles();
         }
       } catch {
         weatherTemp.textContent = '--°C';
@@ -1482,7 +1719,7 @@
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (pos) => loadWeather(pos.coords.latitude.toFixed(3), pos.coords.longitude.toFixed(3)),
-        () => loadWeather(38.524, -8.893), // Fallback: Setúbal, Portugal
+        () => loadWeather(38.524, -8.893),
         { timeout: 5000 }
       );
     } else {
@@ -1528,7 +1765,7 @@
     });
 
     /* ==========================================================
-       4. Zero-Latency Web Audio API Sound FX + Focus Chime
+       4. Zero-Latency Web Audio API Sound FX
        ========================================================== */
     let sfxEnabled = localStorage.getItem('nino_sfx') !== 'false';
     const sfxToggle = document.getElementById('sfx-toggle');
@@ -1583,25 +1820,6 @@
       osc.stop(now + 0.065);
     }
 
-    function playChime() {
-      if (!sfxEnabled) return;
-      const ctx = getAudioCtx();
-      if (!ctx) return;
-      const now = ctx.currentTime;
-      [587.33, 880].forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now + idx * 0.14);
-        gain.gain.setValueAtTime(0.08, now + idx * 0.14);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.14 + 0.45);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now + idx * 0.14);
-        osc.stop(now + idx * 0.14 + 0.48);
-      });
-    }
-
     function updateSfxUI() {
       sfxLabel.textContent = sfxEnabled ? 'SFX: On' : 'SFX: Off';
       sfxDot.classList.toggle('muted', !sfxEnabled);
@@ -1615,84 +1833,15 @@
       if (sfxEnabled) playPop();
     });
 
-    document.querySelectorAll('.sfx-item').forEach(el => {
-      el.addEventListener('mouseenter', playTick);
-      el.addEventListener('mousedown', playPop);
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('.sfx-item')) playTick();
+    });
+    document.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.sfx-item')) playPop();
     });
 
     /* ==========================================================
-       5. Pomodoro / Focus Timer Widget
-       ========================================================== */
-    const pomoDisplay = document.getElementById('pomo-display');
-    const pomoStartBtn = document.getElementById('pomo-start');
-    const pomoResetBtn = document.getElementById('pomo-reset');
-    const pomoBarFill = document.getElementById('pomo-bar-fill');
-    const modeButtons = document.querySelectorAll('.pomo-mode-btn');
-
-    let pomoTotalSeconds = 25 * 60;
-    let pomoRemaining = pomoTotalSeconds;
-    let pomoInterval = null;
-    let pomoRunning = false;
-
-    function formatTimer(sec) {
-      const m = String(Math.floor(sec / 60)).padStart(2, '0');
-      const s = String(sec % 60).padStart(2, '0');
-      return `${m}:${s}`;
-    }
-
-    function renderPomodoro() {
-      pomoDisplay.textContent = formatTimer(pomoRemaining);
-      const pct = Math.max(0, (pomoRemaining / pomoTotalSeconds) * 100);
-      pomoBarFill.style.width = `${pct}%`;
-      pomoStartBtn.textContent = pomoRunning ? 'Pause' : 'Start';
-    }
-
-    function stopPomodoro() {
-      clearInterval(pomoInterval);
-      pomoInterval = null;
-      pomoRunning = false;
-      renderPomodoro();
-    }
-
-    pomoStartBtn.addEventListener('click', () => {
-      if (pomoRunning) {
-        stopPomodoro();
-      } else {
-        if (pomoRemaining <= 0) pomoRemaining = pomoTotalSeconds;
-        pomoRunning = true;
-        renderPomodoro();
-        pomoInterval = setInterval(() => {
-          pomoRemaining -= 1;
-          renderPomodoro();
-          if (pomoRemaining <= 0) {
-            stopPomodoro();
-            playChime();
-          }
-        }, 1000);
-      }
-    });
-
-    pomoResetBtn.addEventListener('click', () => {
-      stopPomodoro();
-      pomoRemaining = pomoTotalSeconds;
-      renderPomodoro();
-    });
-
-    modeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        modeButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        stopPomodoro();
-        pomoTotalSeconds = parseInt(btn.dataset.minutes, 10) * 60;
-        pomoRemaining = pomoTotalSeconds;
-        renderPomodoro();
-      });
-    });
-
-    renderPomodoro();
-
-    /* ==========================================================
-       6. 3D Perspective Card Tilt & Radial Cursor Spotlight
+       5. 3D Perspective Card Tilt & Radial Cursor Spotlight
        ========================================================== */
     document.querySelectorAll('.bento-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
@@ -1705,7 +1854,7 @@
 
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const maxTilt = card.classList.contains('dock-card') ? 2.2 : 4.5;
+        const maxTilt = card.classList.contains('dock-card') ? 2.2 : 4.2;
         const rotateX = ((y - centerY) / centerY) * -maxTilt;
         const rotateY = ((x - centerX) / centerX) * maxTilt;
 
@@ -1718,22 +1867,40 @@
     });
 
     /* ==========================================================
-       7. Fullscreen Cyan Particle Cursor Trail Canvas
+       6. Fullscreen Weather-Reactive + Cursor Trail Canvas
        ========================================================== */
-    const canvas = document.getElementById('trail-canvas');
+    const canvas = document.getElementById('fx-canvas');
     const ctx = canvas.getContext('2d');
-    let particles = [];
+    let cursorParticles = [];
+    let weatherParticles = [];
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      initWeatherParticles();
     }
+
+    function initWeatherParticles() {
+      weatherParticles = [];
+      const count = currentWeatherEffect === 'rain' ? 85 : currentWeatherEffect === 'snow' ? 55 : 22;
+      for (let i = 0; i < count; i++) {
+        weatherParticles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          speedY: currentWeatherEffect === 'rain' ? Math.random() * 8 + 9 : Math.random() * 1.1 + 0.35,
+          speedX: currentWeatherEffect === 'rain' ? -1.4 : (Math.random() - 0.5) * 0.6,
+          size: currentWeatherEffect === 'rain' ? Math.random() * 12 + 10 : Math.random() * 2.5 + 1.2,
+          alpha: Math.random() * 0.25 + 0.08
+        });
+      }
+    }
+
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
     window.addEventListener('mousemove', (e) => {
       for (let i = 0; i < 2; i++) {
-        particles.push({
+        cursorParticles.push({
           x: e.clientX + (Math.random() - 0.5) * 6,
           y: e.clientY + (Math.random() - 0.5) * 6,
           vx: (Math.random() - 0.5) * 0.7,
@@ -1742,22 +1909,56 @@
           alpha: 0.75
         });
       }
-      if (particles.length > 90) {
-        particles.splice(0, particles.length - 90);
+      if (cursorParticles.length > 90) {
+        cursorParticles.splice(0, cursorParticles.length - 90);
       }
     });
 
-    function animateParticles() {
+    function animateCanvas() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
+
+      // Weather-reactive backdrop layer
+      for (const w of weatherParticles) {
+        w.x += w.speedX;
+        w.y += w.speedY;
+        if (w.y > canvas.height) {
+          w.y = -15;
+          w.x = Math.random() * canvas.width;
+        }
+        if (w.x < 0) w.x = canvas.width;
+        if (w.x > canvas.width) w.x = 0;
+
+        if (currentWeatherEffect === 'rain') {
+          ctx.beginPath();
+          ctx.moveTo(w.x, w.y);
+          ctx.lineTo(w.x + w.speedX * 1.4, w.y + w.size);
+          ctx.strokeStyle = `rgba(125, 211, 252, ${w.alpha})`;
+          ctx.lineWidth = 1.1;
+          ctx.stroke();
+        } else if (currentWeatherEffect === 'snow') {
+          ctx.beginPath();
+          ctx.arc(w.x, w.y, w.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(241, 245, 249, ${w.alpha + 0.1})`;
+          ctx.fill();
+        } else {
+          // Subtle ambient fireflies / dust motes
+          ctx.beginPath();
+          ctx.arc(w.x, w.y, w.size * 0.85, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(125, 211, 252, ${w.alpha * 0.65})`;
+          ctx.fill();
+        }
+      }
+
+      // Glowing cyan cursor trail layer
+      for (let i = cursorParticles.length - 1; i >= 0; i--) {
+        const p = cursorParticles[i];
         p.x += p.vx;
         p.y += p.vy;
         p.alpha -= 0.018;
         p.size *= 0.97;
 
         if (p.alpha <= 0.02) {
-          particles.splice(i, 1);
+          cursorParticles.splice(i, 1);
           continue;
         }
 
@@ -1769,12 +1970,12 @@
         ctx.fill();
       }
       ctx.shadowBlur = 0;
-      requestAnimationFrame(animateParticles);
+      requestAnimationFrame(animateCanvas);
     }
-    animateParticles();
+    animateCanvas();
 
     /* ==========================================================
-       8. Scratchpad Auto-Save (localStorage)
+       7. Scratchpad Auto-Save & Base64 / URL Encoder-Decoder
        ========================================================== */
     const scratchpad = document.getElementById('scratchpad');
     const saveStatus = document.getElementById('save-status');
@@ -1792,11 +1993,69 @@
       }, 220);
     });
 
+    // Base64 / URL Encoder-Decoder
+    const codecInput = document.getElementById('codec-input');
+    const codecModeBtns = document.querySelectorAll('.codec-mode-btn');
+    const btnEncode = document.getElementById('btn-encode');
+    const btnDecode = document.getElementById('btn-decode');
+    const btnCopyCodec = document.getElementById('btn-copy-codec');
+
+    let codecType = 'base64';
+
+    codecModeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        codecModeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        codecType = btn.dataset.codec;
+      });
+    });
+
+    btnEncode.addEventListener('click', () => {
+      const val = codecInput.value;
+      if (!val) return;
+      try {
+        if (codecType === 'base64') {
+          const bytes = new TextEncoder().encode(val);
+          const binString = Array.from(bytes, b => String.fromCodePoint(b)).join('');
+          codecInput.value = btoa(binString);
+        } else {
+          codecInput.value = encodeURIComponent(val);
+        }
+      } catch {
+        codecInput.value = 'Error encoding input';
+      }
+    });
+
+    btnDecode.addEventListener('click', () => {
+      const val = codecInput.value.trim();
+      if (!val) return;
+      try {
+        if (codecType === 'base64') {
+          const binString = atob(val);
+          const bytes = Uint8Array.from(binString, m => m.codePointAt(0));
+          codecInput.value = new TextDecoder().decode(bytes);
+        } else {
+          codecInput.value = decodeURIComponent(val);
+        }
+      } catch {
+        codecInput.value = 'Invalid encoded string';
+      }
+    });
+
+    btnCopyCodec.addEventListener('click', () => {
+      if (!codecInput.value) return;
+      navigator.clipboard.writeText(codecInput.value);
+      const orig = btnCopyCodec.textContent;
+      btnCopyCodec.textContent = 'Copied!';
+      setTimeout(() => { btnCopyCodec.textContent = orig; }, 1200);
+    });
+
     /* ==========================================================
-       9. Live Discord & Spotify via Lanyard + Progress & Links
+       8. Live Discord, Spotify & Squad/Steam Friends via Lanyard
        ========================================================== */
     const DISCORD_USER_ID = '1519019638661451897';
     const RECENT_TRACKS_KEY = 'nino_recent_spotify_tracks';
+    const SQUAD_IDS_KEY = 'nino_squad_discord_ids';
 
     const lanyardConn = document.getElementById('lanyard-conn');
     const discordAvatar = document.getElementById('discord-avatar');
@@ -1845,6 +2104,12 @@
       recentList.classList.toggle('open');
     });
 
+    function escapeHtml(str) {
+      return String(str || '').replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[m]));
+    }
+
     function renderRecentTracks() {
       const tracks = JSON.parse(localStorage.getItem(RECENT_TRACKS_KEY) || '[]');
       if (!tracks.length) {
@@ -1877,13 +2142,78 @@
       renderRecentTracks();
     }
 
-    function escapeHtml(str) {
-      return String(str || '').replace(/[&<>"']/g, m => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[m]));
-    }
-
     renderRecentTracks();
+
+    // Squad / Steam Friends Online Tracker
+    const squadToggleAdd = document.getElementById('squad-toggle-add');
+    const squadAddForm = document.getElementById('squad-add-form');
+    const squadIdInput = document.getElementById('squad-id-input');
+    const squadList = document.getElementById('squad-list');
+
+    let squadIds = JSON.parse(localStorage.getItem(SQUAD_IDS_KEY) || '[]');
+    const squadCache = {};
+
+    squadToggleAdd.addEventListener('click', () => {
+      squadAddForm.classList.toggle('open');
+      if (squadAddForm.classList.contains('open')) squadIdInput.focus();
+    });
+
+    squadAddForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const rawId = squadIdInput.value.trim().replace(/\D/g, '');
+      if (rawId && !squadIds.includes(rawId) && rawId !== DISCORD_USER_ID) {
+        squadIds.push(rawId);
+        localStorage.setItem(SQUAD_IDS_KEY, JSON.stringify(squadIds));
+        squadIdInput.value = '';
+        squadAddForm.classList.remove('open');
+        connectLanyard();
+      }
+    });
+
+    window.removeSquadFriend = function(id) {
+      squadIds = squadIds.filter(item => item !== id);
+      delete squadCache[id];
+      localStorage.setItem(SQUAD_IDS_KEY, JSON.stringify(squadIds));
+      renderSquadList();
+    };
+
+    function renderSquadList() {
+      if (!squadIds.length) {
+        squadList.innerHTML = `<div style="font-size:0.72rem;color:var(--text-muted);padding:2px 4px;">Click "+ Add ID" to track friends' live Steam/PC games.</div>`;
+        return;
+      }
+      squadList.innerHTML = squadIds.map(id => {
+        const info = squadCache[id];
+        if (!info) {
+          return `
+            <div class="squad-row">
+              <div class="squad-friend-left">
+                <span class="mini-dot status-offline"></span>
+                <span class="squad-friend-name">${escapeHtml(id)}</span>
+              </div>
+              <button type="button" class="squad-remove" onclick="removeSquadFriend('${id}')" title="Remove">✕</button>
+            </div>
+          `;
+        }
+        const status = info.discord_status || 'offline';
+        const name = info.discord_user?.global_name || info.discord_user?.username || id;
+        const game = (info.activities || []).find(a => a.type === 0 || a.type === 1);
+        const gameText = game ? `Playing ${game.name}` : (status === 'offline' ? 'Offline' : 'Online');
+        return `
+          <div class="squad-row">
+            <div class="squad-friend-left">
+              <span class="mini-dot status-${status}"></span>
+              <span class="squad-friend-name">${escapeHtml(name)}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="squad-friend-game">${escapeHtml(gameText)}</span>
+              <button type="button" class="squad-remove" onclick="removeSquadFriend('${id}')" title="Remove">✕</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    renderSquadList();
 
     function updatePresenceUI(data) {
       if (!data) return;
@@ -1957,15 +2287,19 @@
     let heartbeatInterval = null;
 
     function connectLanyard() {
+      if (lanyardSocket) {
+        try { lanyardSocket.close(); } catch {}
+      }
       lanyardConn.textContent = 'Connecting';
       lanyardSocket = new WebSocket('wss://api.lanyard.rest/socket');
 
       lanyardSocket.onmessage = (event) => {
         const payload = JSON.parse(event.data);
         if (payload.op === 1) {
+          const allIds = [DISCORD_USER_ID, ...squadIds];
           lanyardSocket.send(JSON.stringify({
             op: 2,
-            d: { subscribe_to_id: DISCORD_USER_ID }
+            d: { subscribe_to_ids: allIds }
           }));
           clearInterval(heartbeatInterval);
           heartbeatInterval = setInterval(() => {
@@ -1973,16 +2307,32 @@
               lanyardSocket.send(JSON.stringify({ op: 3 }));
             }
           }, payload.d.heartbeat_interval);
-        } else if (payload.op === 0 && (payload.t === 'INIT_STATE' || payload.t === 'PRESENCE_UPDATE')) {
+        } else if (payload.op === 0) {
           lanyardConn.textContent = 'Live';
-          updatePresenceUI(payload.d);
+          if (payload.t === 'INIT_STATE') {
+            if (payload.d[DISCORD_USER_ID]) {
+              updatePresenceUI(payload.d[DISCORD_USER_ID]);
+            }
+            for (const id of squadIds) {
+              if (payload.d[id]) squadCache[id] = payload.d[id];
+            }
+            renderSquadList();
+          } else if (payload.t === 'PRESENCE_UPDATE') {
+            const uid = payload.d.user_id || payload.d.discord_user?.id;
+            if (uid === DISCORD_USER_ID) {
+              updatePresenceUI(payload.d);
+            } else if (squadIds.includes(uid)) {
+              squadCache[uid] = payload.d;
+              renderSquadList();
+            }
+          }
         }
       };
 
       lanyardSocket.onclose = () => {
         lanyardConn.textContent = 'Reconnecting';
         clearInterval(heartbeatInterval);
-        setTimeout(connectLanyard, 4000);
+        setTimeout(connectLanyard, 4500);
       };
 
       lanyardSocket.onerror = () => {
@@ -1992,7 +2342,7 @@
     connectLanyard();
 
     /* ==========================================================
-       10. Collapsible Stats Pill Tab (GitHub API + Click Counter)
+       9. Collapsible Stats & Live API Status Monitor
        ========================================================== */
     const statsToggle = document.getElementById('stats-toggle');
     const statsPopover = document.getElementById('stats-popover');
@@ -2028,7 +2378,52 @@
         ghRepos.textContent = 'N/A';
       }
     }
+
+    async function checkApiStatuses() {
+      // 1. GitHub Statuspage API
+      const ghDot = document.getElementById('api-gh-dot');
+      const ghText = document.getElementById('api-gh-text');
+      try {
+        const r = await fetch('https://www.githubstatus.com/api/v2/summary.json');
+        const d = await r.json();
+        const ind = d.status?.indicator || 'none';
+        ghDot.className = `api-dot ${ind === 'none' ? 'ok' : ind === 'minor' ? 'warn' : 'down'}`;
+        ghText.textContent = ind === 'none' ? 'Operational' : 'Degraded';
+      } catch {
+        ghDot.className = 'api-dot warn';
+        ghText.textContent = 'Unknown';
+      }
+
+      // 2. Discord Statuspage API
+      const dcDot = document.getElementById('api-dc-dot');
+      const dcText = document.getElementById('api-dc-text');
+      try {
+        const r = await fetch('https://discordstatus.com/api/v2/summary.json');
+        const d = await r.json();
+        const ind = d.status?.indicator || 'none';
+        dcDot.className = `api-dot ${ind === 'none' ? 'ok' : ind === 'minor' ? 'warn' : 'down'}`;
+        dcText.textContent = ind === 'none' ? 'Operational' : 'Degraded';
+      } catch {
+        dcDot.className = 'api-dot warn';
+        dcText.textContent = 'Unknown';
+      }
+
+      // 3. Steam Store Reachability Ping (no-cors favicon probe)
+      const stDot = document.getElementById('api-st-dot');
+      const stText = document.getElementById('api-st-text');
+      try {
+        await fetch('https://store.steampowered.com/favicon.ico', { mode: 'no-cors', cache: 'no-store' });
+        stDot.className = 'api-dot ok';
+        stText.textContent = 'Online';
+      } catch {
+        stDot.className = 'api-dot down';
+        stText.textContent = 'Unreachable';
+      }
+    }
+
     fetchGitHubStats();
+    checkApiStatuses();
+    setInterval(checkApiStatuses, 120000);
   </script>
 </body>
 </html>
