@@ -72,11 +72,11 @@
       min-height: 100vh;
       max-width: 1180px;
       margin: 0 auto;
-      padding: 36px 24px 80px;
+      padding: 32px 24px 80px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 24px;
+      gap: 22px;
     }
 
     /* Glass Base & 3D Tilt Spotlight Card */
@@ -153,7 +153,7 @@
       align-items: center;
       text-align: center;
       gap: 10px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .clock-row {
@@ -186,7 +186,7 @@
       gap: 10px;
       flex-wrap: wrap;
       justify-content: center;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       color: var(--text-secondary);
     }
 
@@ -206,11 +206,51 @@
       background: var(--text-muted);
     }
 
+    /* Live Weather Pill */
+    .weather-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(13, 19, 28, 0.65);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid rgba(125, 211, 252, 0.22);
+      color: var(--text-primary);
+      font-size: 0.8rem;
+      font-weight: 500;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .weather-pill:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .weather-pill svg {
+      width: 14px;
+      height: 14px;
+      color: var(--accent);
+    }
+
+    .weather-temp {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .weather-desc {
+      color: var(--text-secondary);
+      font-size: 0.76rem;
+    }
+
     /* Frosted Search Bar */
     .search-wrapper {
       width: 100%;
       max-width: 640px;
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .search-form {
@@ -294,7 +334,7 @@
     /* 2. Bento Grid Layout */
     .bento-grid {
       display: grid;
-      grid-template-columns: 1.25fr 1fr 0.9fr;
+      grid-template-columns: 1.25fr 1fr 0.92fr;
       gap: 18px;
     }
 
@@ -376,14 +416,14 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding-bottom: 16px;
+      padding-bottom: 14px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     }
 
     .avatar-wrap {
       position: relative;
-      width: 54px;
-      height: 54px;
+      width: 52px;
+      height: 52px;
       flex-shrink: 0;
     }
 
@@ -400,8 +440,8 @@
       position: absolute;
       bottom: 1px;
       right: 1px;
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
       border: 2.5px solid #0d131c;
       background: #64748b;
@@ -425,7 +465,7 @@
     }
 
     .discord-username {
-      font-size: 1.02rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
       white-space: nowrap;
@@ -434,7 +474,7 @@
     }
 
     .status-pill {
-      font-size: 0.7rem;
+      font-size: 0.69rem;
       font-weight: 600;
       padding: 2px 8px;
       border-radius: 999px;
@@ -444,7 +484,7 @@
     }
 
     .discord-activity {
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       color: var(--text-secondary);
       margin-top: 3px;
       white-space: nowrap;
@@ -457,22 +497,28 @@
       font-weight: 500;
     }
 
-    /* Spotify Vinyl Widget */
+    /* Spotify Vinyl Widget + Live Progress Bar + Track/Lyrics Links */
     .spotify-section {
-      margin-top: 16px;
+      margin-top: 14px;
       padding: 13px;
       border-radius: var(--radius-md);
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .spotify-top-row {
+      display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 13px;
     }
 
     .vinyl-disc {
       position: relative;
-      width: 56px;
-      height: 56px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       background: radial-gradient(circle, #1e293b 28%, #090d14 30%, #111827 55%, #070a0f 75%, #1e293b 100%);
       border: 1.5px solid rgba(255, 255, 255, 0.14);
@@ -488,8 +534,8 @@
     }
 
     .vinyl-art {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       object-fit: cover;
       border: 1.5px solid rgba(125, 211, 252, 0.5);
@@ -514,6 +560,14 @@
       min-width: 0;
     }
 
+    .spotify-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+
     .spotify-badge {
       display: inline-flex;
       align-items: center;
@@ -523,11 +577,34 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: #4ade80;
-      margin-bottom: 3px;
     }
 
     .spotify-badge.idle {
       color: var(--text-muted);
+    }
+
+    .lyrics-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.69rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(125, 211, 252, 0.1);
+      border: 1px solid rgba(125, 211, 252, 0.22);
+      transition: all 0.2s ease;
+    }
+
+    .lyrics-link:hover {
+      background: var(--accent);
+      color: #061018;
+    }
+
+    .lyrics-link.hidden {
+      display: none;
     }
 
     .eq-bars {
@@ -552,13 +629,22 @@
       100% { height: 10px; }
     }
 
-    .track-title {
+    .track-title-link {
+      display: block;
       font-size: 0.9rem;
       font-weight: 600;
       color: var(--text-primary);
+      text-decoration: none;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      transition: color 0.2s ease;
+    }
+
+    .track-title-link[href]:hover {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     .track-artist {
@@ -570,10 +656,46 @@
       margin-top: 1px;
     }
 
+    /* Spotify Progress Bar */
+    .spotify-progress-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .spotify-progress-wrap.hidden {
+      display: none;
+    }
+
+    .spotify-bar-bg {
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .spotify-bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #38bdf8, var(--accent));
+      box-shadow: 0 0 10px var(--accent-glow);
+      transition: width 0.5s linear;
+    }
+
+    .spotify-times {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.67rem;
+      color: var(--text-muted);
+    }
+
     /* Recently Played Drawer */
     .recent-drawer-wrap {
       margin-top: auto;
-      padding-top: 14px;
+      padding-top: 12px;
     }
 
     .drawer-toggle {
@@ -628,6 +750,12 @@
       background: rgba(255, 255, 255, 0.025);
       border: 1px solid rgba(255, 255, 255, 0.04);
       font-size: 0.78rem;
+      text-decoration: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .recent-item:hover {
+      border-color: rgba(125, 211, 252, 0.35);
     }
 
     .recent-item img {
@@ -659,9 +787,120 @@
       text-overflow: ellipsis;
     }
 
+    /* Center Column: Pomodoro Focus Timer + Scratchpad */
+    .center-column {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .pomo-card {
+      padding: 18px 20px;
+    }
+
+    .pomo-modes {
+      display: inline-flex;
+      background: rgba(8, 12, 19, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 999px;
+      padding: 2px;
+    }
+
+    .pomo-mode-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pomo-mode-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .pomo-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 4px 0 12px;
+    }
+
+    .pomo-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.15rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      text-shadow: 0 0 22px rgba(125, 211, 252, 0.2);
+    }
+
+    .pomo-controls {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .pomo-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 7px 13px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(125, 211, 252, 0.3);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pomo-btn:hover {
+      background: var(--accent);
+      color: #061018;
+    }
+
+    .pomo-btn.secondary {
+      padding: 7px 9px;
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+    }
+
+    .pomo-btn.secondary:hover {
+      border-color: rgba(125, 211, 252, 0.35);
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .pomo-bar-bg {
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .pomo-bar-fill {
+      height: 100%;
+      width: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+      transition: width 0.4s ease;
+    }
+
     /* Quick Scratchpad Card */
     .notes-card {
-      padding: 20px;
+      padding: 18px 20px;
+      flex: 1;
       display: flex;
       flex-direction: column;
     }
@@ -676,16 +915,16 @@
     .scratchpad-area {
       flex: 1;
       width: 100%;
-      min-height: 215px;
+      min-height: 112px;
       resize: none;
       background: rgba(8, 12, 19, 0.42);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius-md);
-      padding: 13px 14px;
+      padding: 11px 13px;
       color: var(--text-primary);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      line-height: 1.6;
+      font-size: 0.81rem;
+      line-height: 1.55;
       outline: none;
       transition: border-color 0.2s ease, background 0.2s ease;
     }
@@ -881,7 +1120,7 @@
   <canvas id="trail-canvas"></canvas>
 
   <main class="app-shell">
-    <!-- 1. Hero Header & Live Search -->
+    <!-- 1. Hero Header, Live Weather Pill & Search -->
     <header class="hero-header">
       <div class="clock-row">
         <div class="digital-clock" id="clock-main">00:00</div>
@@ -891,6 +1130,12 @@
         <div class="greeting-text" id="greeting-text">Good morning, <span>Nino</span></div>
         <div class="dot-sep"></div>
         <div id="date-text">Loading date...</div>
+        <div class="dot-sep"></div>
+        <div class="weather-pill" id="weather-pill" title="Live local weather via Open-Meteo">
+          <svg id="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+          <span class="weather-temp" id="weather-temp">--°C</span>
+          <span class="weather-desc" id="weather-desc">Syncing...</span>
+        </div>
       </div>
 
       <div class="search-wrapper">
@@ -906,7 +1151,7 @@
             name="q"
             id="search-input"
             class="search-input"
-            placeholder="Search Google or type a URL..."
+            placeholder="Search Google or enter a query..."
             autocomplete="off"
             autofocus
           />
@@ -974,18 +1219,36 @@
             </div>
           </div>
 
-          <!-- Spinning Vinyl Spotify Player -->
+          <!-- Spinning Vinyl Spotify Player + Progress Bar + Track/Lyrics Links -->
           <div class="spotify-section">
-            <div class="vinyl-disc" id="vinyl-disc">
-              <img id="spotify-art" class="vinyl-art" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231e293b'/%3E%3Ccircle cx='20' cy='20' r='8' fill='%237dd3fc' fill-opacity='0.3'/%3E%3C/svg%3E" alt="Album Art" />
-              <div class="vinyl-spindle"></div>
-            </div>
-            <div class="spotify-info">
-              <div class="spotify-badge idle" id="spotify-badge">
-                <span>Spotify Idle</span>
+            <div class="spotify-top-row">
+              <div class="vinyl-disc" id="vinyl-disc">
+                <img id="spotify-art" class="vinyl-art" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231e293b'/%3E%3Ccircle cx='20' cy='20' r='8' fill='%237dd3fc' fill-opacity='0.3'/%3E%3C/svg%3E" alt="Album Art" />
+                <div class="vinyl-spindle"></div>
               </div>
-              <div class="track-title" id="spotify-title">Not playing anything</div>
-              <div class="track-artist" id="spotify-artist">Listen on Spotify to sync live</div>
+              <div class="spotify-info">
+                <div class="spotify-badge-row">
+                  <div class="spotify-badge idle" id="spotify-badge">
+                    <span>Spotify Idle</span>
+                  </div>
+                  <a id="spotify-lyrics-link" class="lyrics-link hidden track-click sfx-item" target="_blank" rel="noopener" title="Search track lyrics">
+                    Lyrics ↗
+                  </a>
+                </div>
+                <a id="spotify-title" class="track-title-link" target="_blank" rel="noopener">Not playing anything</a>
+                <div class="track-artist" id="spotify-artist">Listen on Spotify to sync live</div>
+              </div>
+            </div>
+
+            <!-- Real-Time Spotify Progress Bar -->
+            <div class="spotify-progress-wrap hidden" id="spotify-progress-wrap">
+              <div class="spotify-bar-bg">
+                <div class="spotify-bar-fill" id="spotify-bar-fill"></div>
+              </div>
+              <div class="spotify-times">
+                <span id="spotify-elapsed">0:00</span>
+                <span id="spotify-duration">0:00</span>
+              </div>
             </div>
           </div>
 
@@ -1000,22 +1263,55 @@
         </div>
       </div>
 
-      <!-- Center Card: Quick Scratchpad / Notes -->
-      <div class="bento-card notes-card">
-        <div class="card-inner" style="display:flex;flex-direction:column;">
-          <div class="card-header">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-              Scratchpad
+      <!-- Center Column: Pomodoro Focus Timer + Scratchpad -->
+      <div class="center-column">
+        <!-- Pomodoro / Focus Timer Widget -->
+        <div class="bento-card pomo-card">
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Focus Timer
+              </div>
+              <div class="pomo-modes">
+                <button type="button" class="pomo-mode-btn active sfx-item" data-minutes="25" id="mode-focus">25m Focus</button>
+                <button type="button" class="pomo-mode-btn sfx-item" data-minutes="5" id="mode-break">5m Break</button>
+              </div>
             </div>
-            <span class="save-indicator" id="save-status">Saved</span>
+
+            <div class="pomo-main">
+              <div class="pomo-display" id="pomo-display">25:00</div>
+              <div class="pomo-controls">
+                <button type="button" class="pomo-btn sfx-item" id="pomo-start">Start</button>
+                <button type="button" class="pomo-btn secondary sfx-item" id="pomo-reset" title="Reset timer">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="pomo-bar-bg">
+              <div class="pomo-bar-fill" id="pomo-bar-fill"></div>
+            </div>
           </div>
-          <textarea
-            id="scratchpad"
-            class="scratchpad-area"
-            placeholder="// Quick notes, links, or to-dos...&#10;// Auto-saves locally across new tabs."
-            spellcheck="false"
-          ></textarea>
+        </div>
+
+        <!-- Quick Scratchpad Card -->
+        <div class="bento-card notes-card">
+          <div class="card-inner" style="display:flex;flex-direction:column;">
+            <div class="card-header">
+              <div class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                Scratchpad
+              </div>
+              <span class="save-indicator" id="save-status">Saved</span>
+            </div>
+            <textarea
+              id="scratchpad"
+              class="scratchpad-area"
+              placeholder="// Quick notes, links, or to-dos...&#10;// Auto-saves locally across new tabs."
+              spellcheck="false"
+            ></textarea>
+          </div>
         </div>
       </div>
 
@@ -1151,7 +1447,50 @@
     setInterval(updateDateTime, 1000);
 
     /* ==========================================================
-       2. Frosted Search Bar (Google / YouTube Toggle + Auto-focus)
+       2. Live Weather Pill (Open-Meteo Keyless API)
+       ========================================================== */
+    const weatherTemp = document.getElementById('weather-temp');
+    const weatherDesc = document.getElementById('weather-desc');
+    const weatherIcon = document.getElementById('weather-icon');
+
+    function decodeWeather(code) {
+      if (code === 0) return { label: 'Clear', icon: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>' };
+      if (code <= 3) return { label: 'Partly Cloudy', icon: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>' };
+      if (code <= 48) return { label: 'Foggy', icon: '<path d="M4 14h16M4 18h12M6 10h12"/>' };
+      if (code <= 67 || (code >= 80 && code <= 82)) return { label: 'Rain', icon: '<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6M8 14v6M12 16v6"/>' };
+      if (code <= 77) return { label: 'Snow', icon: '<path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><path d="M8 16h.01M8 20h.01M12 18h.01M12 22h.01M16 16h.01M16 20h.01"/>' };
+      return { label: 'Storm', icon: '<path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"/><polyline points="13 11 9 17 15 17 11 23"/>' };
+    }
+
+    async function loadWeather(lat, lon) {
+      try {
+        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+        const data = await res.json();
+        if (data && data.current_weather) {
+          const temp = Math.round(data.current_weather.temperature);
+          const info = decodeWeather(data.current_weather.weathercode);
+          weatherTemp.textContent = `${temp}°C`;
+          weatherDesc.textContent = info.label;
+          weatherIcon.innerHTML = info.icon;
+        }
+      } catch {
+        weatherTemp.textContent = '--°C';
+        weatherDesc.textContent = 'Offline';
+      }
+    }
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => loadWeather(pos.coords.latitude.toFixed(3), pos.coords.longitude.toFixed(3)),
+        () => loadWeather(38.524, -8.893), // Fallback: Setúbal, Portugal
+        { timeout: 5000 }
+      );
+    } else {
+      loadWeather(38.524, -8.893);
+    }
+
+    /* ==========================================================
+       3. Frosted Search Bar (Google / YouTube Toggle + Auto-focus)
        ========================================================== */
     const searchForm = document.getElementById('search-form');
     const searchInput = document.getElementById('search-input');
@@ -1189,7 +1528,7 @@
     });
 
     /* ==========================================================
-       3. Zero-Latency Web Audio API Sound FX
+       4. Zero-Latency Web Audio API Sound FX + Focus Chime
        ========================================================== */
     let sfxEnabled = localStorage.getItem('nino_sfx') !== 'false';
     const sfxToggle = document.getElementById('sfx-toggle');
@@ -1244,6 +1583,25 @@
       osc.stop(now + 0.065);
     }
 
+    function playChime() {
+      if (!sfxEnabled) return;
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      [587.33, 880].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.14);
+        gain.gain.setValueAtTime(0.08, now + idx * 0.14);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.14 + 0.45);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.14);
+        osc.stop(now + idx * 0.14 + 0.48);
+      });
+    }
+
     function updateSfxUI() {
       sfxLabel.textContent = sfxEnabled ? 'SFX: On' : 'SFX: Off';
       sfxDot.classList.toggle('muted', !sfxEnabled);
@@ -1263,7 +1621,78 @@
     });
 
     /* ==========================================================
-       4. 3D Perspective Card Tilt & Radial Cursor Spotlight
+       5. Pomodoro / Focus Timer Widget
+       ========================================================== */
+    const pomoDisplay = document.getElementById('pomo-display');
+    const pomoStartBtn = document.getElementById('pomo-start');
+    const pomoResetBtn = document.getElementById('pomo-reset');
+    const pomoBarFill = document.getElementById('pomo-bar-fill');
+    const modeButtons = document.querySelectorAll('.pomo-mode-btn');
+
+    let pomoTotalSeconds = 25 * 60;
+    let pomoRemaining = pomoTotalSeconds;
+    let pomoInterval = null;
+    let pomoRunning = false;
+
+    function formatTimer(sec) {
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function renderPomodoro() {
+      pomoDisplay.textContent = formatTimer(pomoRemaining);
+      const pct = Math.max(0, (pomoRemaining / pomoTotalSeconds) * 100);
+      pomoBarFill.style.width = `${pct}%`;
+      pomoStartBtn.textContent = pomoRunning ? 'Pause' : 'Start';
+    }
+
+    function stopPomodoro() {
+      clearInterval(pomoInterval);
+      pomoInterval = null;
+      pomoRunning = false;
+      renderPomodoro();
+    }
+
+    pomoStartBtn.addEventListener('click', () => {
+      if (pomoRunning) {
+        stopPomodoro();
+      } else {
+        if (pomoRemaining <= 0) pomoRemaining = pomoTotalSeconds;
+        pomoRunning = true;
+        renderPomodoro();
+        pomoInterval = setInterval(() => {
+          pomoRemaining -= 1;
+          renderPomodoro();
+          if (pomoRemaining <= 0) {
+            stopPomodoro();
+            playChime();
+          }
+        }, 1000);
+      }
+    });
+
+    pomoResetBtn.addEventListener('click', () => {
+      stopPomodoro();
+      pomoRemaining = pomoTotalSeconds;
+      renderPomodoro();
+    });
+
+    modeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        stopPomodoro();
+        pomoTotalSeconds = parseInt(btn.dataset.minutes, 10) * 60;
+        pomoRemaining = pomoTotalSeconds;
+        renderPomodoro();
+      });
+    });
+
+    renderPomodoro();
+
+    /* ==========================================================
+       6. 3D Perspective Card Tilt & Radial Cursor Spotlight
        ========================================================== */
     document.querySelectorAll('.bento-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
@@ -1289,7 +1718,7 @@
     });
 
     /* ==========================================================
-       5. Fullscreen Cyan Particle Cursor Trail Canvas
+       7. Fullscreen Cyan Particle Cursor Trail Canvas
        ========================================================== */
     const canvas = document.getElementById('trail-canvas');
     const ctx = canvas.getContext('2d');
@@ -1345,7 +1774,7 @@
     animateParticles();
 
     /* ==========================================================
-       6. Scratchpad Auto-Save (localStorage)
+       8. Scratchpad Auto-Save (localStorage)
        ========================================================== */
     const scratchpad = document.getElementById('scratchpad');
     const saveStatus = document.getElementById('save-status');
@@ -1364,7 +1793,7 @@
     });
 
     /* ==========================================================
-       7. Live Discord & Spotify via Lanyard WebSocket
+       9. Live Discord & Spotify via Lanyard + Progress & Links
        ========================================================== */
     const DISCORD_USER_ID = '1519019638661451897';
     const RECENT_TRACKS_KEY = 'nino_recent_spotify_tracks';
@@ -1381,9 +1810,35 @@
     const spotifyBadge = document.getElementById('spotify-badge');
     const spotifyTitle = document.getElementById('spotify-title');
     const spotifyArtist = document.getElementById('spotify-artist');
+    const spotifyLyricsLink = document.getElementById('spotify-lyrics-link');
+    const spotifyProgressWrap = document.getElementById('spotify-progress-wrap');
+    const spotifyBarFill = document.getElementById('spotify-bar-fill');
+    const spotifyElapsedEl = document.getElementById('spotify-elapsed');
+    const spotifyDurationEl = document.getElementById('spotify-duration');
 
     const recentToggle = document.getElementById('recent-toggle');
     const recentList = document.getElementById('recent-list');
+
+    let activeTimestamps = null;
+
+    function formatMs(ms) {
+      const totalSec = Math.max(0, Math.floor(ms / 1000));
+      const m = Math.floor(totalSec / 60);
+      const s = String(totalSec % 60).padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    setInterval(() => {
+      if (!activeTimestamps || !activeTimestamps.start || !activeTimestamps.end) return;
+      const now = Date.now();
+      const total = activeTimestamps.end - activeTimestamps.start;
+      const elapsed = Math.min(total, Math.max(0, now - activeTimestamps.start));
+      const pct = total > 0 ? (elapsed / total) * 100 : 0;
+
+      spotifyBarFill.style.width = `${pct.toFixed(1)}%`;
+      spotifyElapsedEl.textContent = formatMs(elapsed);
+      spotifyDurationEl.textContent = formatMs(total);
+    }, 500);
 
     recentToggle.addEventListener('click', () => {
       recentToggle.classList.toggle('open');
@@ -1397,13 +1852,13 @@
         return;
       }
       recentList.innerHTML = tracks.map(t => `
-        <div class="recent-item">
+        <a class="recent-item track-click sfx-item" href="https://open.spotify.com/track/${encodeURIComponent(t.track_id)}" target="_blank" rel="noopener">
           <img src="${t.art}" alt="" />
           <div class="recent-item-text">
             <div class="recent-item-title">${escapeHtml(t.song)}</div>
             <div class="recent-item-artist">${escapeHtml(t.artist)}</div>
           </div>
-        </div>
+        </a>
       `).join('');
     }
 
@@ -1446,7 +1901,6 @@
       discordStatusDot.className = `status-dot status-${status}`;
       discordStatusText.textContent = status === 'dnd' ? 'DND' : status;
 
-      // Activities (ignore Spotify type 2 and Custom Status type 4 unless no game)
       const activities = data.activities || [];
       const game = activities.find(a => a.type === 0 || a.type === 1 || a.type === 3);
       const custom = activities.find(a => a.type === 4);
@@ -1460,7 +1914,6 @@
         discordActivity.textContent = status === 'offline' ? 'Currently offline' : 'Chilling on Discord';
       }
 
-      // Spotify Listening Now
       if (data.listening_to_spotify && data.spotify) {
         const sp = data.spotify;
         vinylDisc.classList.add('spinning');
@@ -1470,15 +1923,33 @@
           <span class="eq-bars"><span></span><span></span><span></span></span>
           <span>Listening Now</span>
         `;
+
         spotifyTitle.textContent = sp.song;
+        spotifyTitle.href = `https://open.spotify.com/track/${encodeURIComponent(sp.track_id)}`;
         spotifyArtist.textContent = sp.artist;
+
+        spotifyLyricsLink.href = `https://genius.com/search?q=${encodeURIComponent(`${sp.song} ${sp.artist}`)}`;
+        spotifyLyricsLink.classList.remove('hidden');
+
+        if (sp.timestamps && sp.timestamps.start && sp.timestamps.end) {
+          activeTimestamps = sp.timestamps;
+          spotifyProgressWrap.classList.remove('hidden');
+        } else {
+          activeTimestamps = null;
+          spotifyProgressWrap.classList.add('hidden');
+        }
+
         saveRecentTrack(sp);
       } else {
+        activeTimestamps = null;
         vinylDisc.classList.remove('spinning');
         spotifyBadge.className = 'spotify-badge idle';
         spotifyBadge.innerHTML = `<span>Spotify Idle</span>`;
         spotifyTitle.textContent = 'Not playing anything';
+        spotifyTitle.removeAttribute('href');
         spotifyArtist.textContent = 'Spotify synced via Lanyard';
+        spotifyLyricsLink.classList.add('hidden');
+        spotifyProgressWrap.classList.add('hidden');
       }
     }
 
@@ -1492,7 +1963,6 @@
       lanyardSocket.onmessage = (event) => {
         const payload = JSON.parse(event.data);
         if (payload.op === 1) {
-          // Hello -> Subscribe & start heartbeat
           lanyardSocket.send(JSON.stringify({
             op: 2,
             d: { subscribe_to_id: DISCORD_USER_ID }
@@ -1522,7 +1992,7 @@
     connectLanyard();
 
     /* ==========================================================
-       8. Collapsible Stats Pill Tab (GitHub API + Click Counter)
+       10. Collapsible Stats Pill Tab (GitHub API + Click Counter)
        ========================================================== */
     const statsToggle = document.getElementById('stats-toggle');
     const statsPopover = document.getElementById('stats-popover');
@@ -1534,12 +2004,12 @@
     let totalClicks = parseInt(localStorage.getItem(CLICKS_KEY) || '0', 10);
     totalClicksEl.textContent = totalClicks;
 
-    document.querySelectorAll('.track-click').forEach(el => {
-      el.addEventListener('click', () => {
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.track-click')) {
         totalClicks += 1;
         localStorage.setItem(CLICKS_KEY, totalClicks);
         totalClicksEl.textContent = totalClicks;
-      });
+      }
     });
 
     statsToggle.addEventListener('click', () => {
