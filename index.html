@@ -585,6 +585,121 @@
       color: var(--accent);
     }
 
+    /* Corner Social Stats Floating Pill Tab */
+    .stats-corner-wrap {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 950;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .stats-popover {
+      display: none;
+      width: 230px;
+      background: rgba(20, 38, 48, 0.86);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      animation: popUp 0.18s ease-out;
+    }
+
+    @keyframes popUp {
+      from { opacity: 0; transform: translateY(6px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .stats-corner-wrap.open .stats-popover {
+      display: block;
+    }
+
+    .stats-pop-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stats-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 9px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 6px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-size: 0.76rem;
+      transition: background 0.2s;
+    }
+
+    .stats-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .stats-row:hover {
+      background: rgba(255, 255, 255, 0.13);
+    }
+
+    .stats-row-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .stats-row-val {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 0.74rem;
+    }
+
+    .stats-pill-trigger {
+      background: rgba(24, 46, 58, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      padding: 7px 14px;
+      border-radius: 999px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.74rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .stats-pill-trigger:hover {
+      background: rgba(34, 62, 78, 0.88);
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .stats-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
     /* Footer */
     footer {
       margin-top: 34px;
@@ -770,6 +885,10 @@
       .pill-row {
         flex-wrap: wrap;
       }
+      .stats-corner-wrap {
+        bottom: 12px;
+        right: 12px;
+      }
     }
   </style>
 </head>
@@ -777,6 +896,38 @@
 
   <!-- Cursor Trail & Confetti Particle Canvas -->
   <canvas id="fx-canvas"></canvas>
+
+  <!-- Corner Social Stats Pill Tab -->
+  <div class="stats-corner-wrap" id="stats-corner">
+    <div class="stats-popover" id="stats-popover">
+      <div class="stats-pop-title">
+        <span><i class="fa-solid fa-chart-simple"></i> Live Stats</span>
+        <span style="font-size:0.6rem; opacity:0.75;">Nino</span>
+      </div>
+      <a href="https://github.com/NinoTheNoob" target="_blank" class="stats-row sfx-hover sfx-click">
+        <span class="stats-row-left"><i class="fa-brands fa-github"></i> GitHub Followers</span>
+        <span class="stats-row-val" id="stat-gh-followers">...</span>
+      </a>
+      <a href="https://github.com/NinoTheNoob?tab=repositories" target="_blank" class="stats-row sfx-hover sfx-click">
+        <span class="stats-row-left"><i class="fa-solid fa-code-branch"></i> Public Repos</span>
+        <span class="stats-row-val" id="stat-gh-repos">...</span>
+      </a>
+      <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" class="stats-row sfx-hover sfx-click">
+        <span class="stats-row-left"><i class="fa-brands fa-youtube"></i> YouTube</span>
+        <span class="stats-row-val">@LinkNoir-x5p</span>
+      </a>
+      <div class="stats-row" style="cursor:default;">
+        <span class="stats-row-left"><i class="fa-solid fa-eye"></i> Total Visits</span>
+        <span class="stats-row-val" id="stat-corner-views">...</span>
+      </div>
+    </div>
+
+    <button type="button" class="stats-pill-trigger sfx-hover" id="stats-toggle-btn" title="View Social Stats">
+      <span class="stats-pulse"></span>
+      <i class="fa-solid fa-chart-simple"></i>
+      <span id="stats-pill-summary">Stats</span>
+    </button>
+  </div>
 
   <!-- Center Title -->
   <header class="hero-header">
@@ -797,23 +948,23 @@
           <div class="profile-subtitle">Developer &bull; Gamer</div>
 
           <div class="pill-row">
-            <a href="https://discord.com/users/1519019638661451897" target="_blank" class="pill-btn">
+            <a href="https://discord.com/users/1519019638661451897" target="_blank" class="pill-btn sfx-hover sfx-click">
               <span class="tag">Chat</span>
               <span class="label">Discord</span>
             </a>
-            <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" class="pill-btn">
+            <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" class="pill-btn sfx-hover sfx-click">
               <span class="tag">Watch</span>
               <span class="label">YouTube</span>
             </a>
-            <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" class="pill-btn">
+            <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" class="pill-btn sfx-hover sfx-click">
               <span class="tag">Play</span>
               <span class="label">Steam</span>
             </a>
-            <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="pill-btn">
+            <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="pill-btn sfx-hover sfx-click">
               <span class="tag">Profile</span>
               <span class="label">Roblox</span>
             </a>
-            <a href="https://github.com/NinoTheNoob" target="_blank" class="pill-btn">
+            <a href="https://github.com/NinoTheNoob" target="_blank" class="pill-btn sfx-hover sfx-click">
               <span class="tag">Code</span>
               <span class="label">GitHub</span>
             </a>
@@ -857,7 +1008,7 @@
               <div class="track-artist" id="spotify-artist">Artist Name</div>
             </div>
           </div>
-          <a href="#" target="_blank" class="listen-btn" id="spotify-link">
+          <a href="#" target="_blank" class="listen-btn sfx-hover sfx-click" id="spotify-link">
             <i class="fa-solid fa-headphones"></i> Listen Along
           </a>
         </div>
@@ -874,11 +1025,11 @@
         <section class="glass-panel tilt-card">
           <h3 class="section-heading">Languages</h3>
           <div class="vertical-list">
-            <div class="vertical-item">
+            <div class="vertical-item sfx-hover">
               <i class="fa-solid fa-gear"></i>
               <span>Rust</span>
             </div>
-            <div class="vertical-item">
+            <div class="vertical-item sfx-hover">
               <i class="fa-solid fa-code"></i>
               <span>Python</span>
             </div>
@@ -888,19 +1039,19 @@
         <section class="glass-panel tilt-card">
           <h3 class="section-heading">Games</h3>
           <div class="vertical-list">
-            <div class="vertical-item">
+            <div class="vertical-item sfx-hover">
               <i class="fa-solid fa-cube"></i>
               <span>Minecraft</span>
             </div>
-            <div class="vertical-item">
+            <div class="vertical-item sfx-hover">
               <i class="fa-solid fa-robot"></i>
               <span>Titanfall 2</span>
             </div>
-            <div class="vertical-item">
+            <div class="vertical-item sfx-hover">
               <i class="fa-solid fa-gamepad"></i>
               <span>Roblox</span>
             </div>
-            <div class="vertical-item">
+            <div class="vertical-item sfx-hover">
               <i class="fa-solid fa-crosshairs"></i>
               <span>R6 Siege</span>
             </div>
@@ -915,7 +1066,7 @@
 
       <div class="right-section-label">Socials</div>
 
-      <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" class="glass-panel tilt-card feature-card">
+      <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" class="glass-panel tilt-card feature-card sfx-hover sfx-click">
         <div class="feature-icon"><i class="fa-brands fa-youtube"></i></div>
         <div class="feature-content">
           <h3>YouTube (@LinkNoir-x5p)</h3>
@@ -924,7 +1075,7 @@
         </div>
       </a>
 
-      <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" class="glass-panel tilt-card feature-card">
+      <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" class="glass-panel tilt-card feature-card sfx-hover sfx-click">
         <div class="feature-icon"><i class="fa-brands fa-steam"></i></div>
         <div class="feature-content">
           <h3>Steam (Nin00b)</h3>
@@ -933,7 +1084,7 @@
         </div>
       </a>
 
-      <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="glass-panel tilt-card feature-card">
+      <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="glass-panel tilt-card feature-card sfx-hover sfx-click">
         <div class="feature-icon"><i class="fa-solid fa-gamepad"></i></div>
         <div class="feature-content">
           <h3>Roblox Profile</h3>
@@ -944,7 +1095,7 @@
 
       <div class="right-section-label">Code &amp; Community</div>
 
-      <a href="https://github.com/NinoTheNoob" target="_blank" class="glass-panel tilt-card feature-card">
+      <a href="https://github.com/NinoTheNoob" target="_blank" class="glass-panel tilt-card feature-card sfx-hover sfx-click">
         <div class="feature-icon"><i class="fa-brands fa-github"></i></div>
         <div class="feature-content">
           <h3>GitHub (NinoTheNoob)</h3>
@@ -953,7 +1104,7 @@
         </div>
       </a>
 
-      <a href="https://discord.com/users/1519019638661451897" target="_blank" class="glass-panel tilt-card feature-card">
+      <a href="https://discord.com/users/1519019638661451897" target="_blank" class="glass-panel tilt-card feature-card sfx-hover sfx-click">
         <div class="feature-icon"><i class="fa-brands fa-discord"></i></div>
         <div class="feature-content">
           <h3>Discord (Nino / @Ninwwo)</h3>
@@ -966,12 +1117,15 @@
   </main>
 
   <footer>
-    <a href="https://github.com/NinoTheNoob" target="_blank" class="footer-pill">GitHub</a>
-    <a href="https://ko-fi.com/nin0" target="_blank" class="footer-pill kofi-pill" title="Support on Ko-fi">
+    <a href="https://github.com/NinoTheNoob" target="_blank" class="footer-pill sfx-hover sfx-click">GitHub</a>
+    <a href="https://ko-fi.com/nin0" target="_blank" class="footer-pill kofi-pill sfx-hover sfx-click" title="Support on Ko-fi">
       <i class="fa-solid fa-mug-hot"></i> Support
     </a>
-    <button type="button" class="footer-pill" id="easter-egg-btn" title="Psst... click me">
+    <button type="button" class="footer-pill sfx-hover" id="easter-egg-btn" title="Psst... click me">
       <i class="fa-solid fa-eye"></i> <span id="view-count">...</span> views
+    </button>
+    <button type="button" class="footer-pill sfx-hover" id="sfx-toggle-btn" title="Toggle UI Sound Effects">
+      <i class="fa-solid fa-volume-high" id="sfx-icon"></i> <span id="sfx-label">SFX On</span>
     </button>
     <span>&copy; 2026 Nino</span>
   </footer>
@@ -981,14 +1135,14 @@
     <div class="modal-box">
       <div class="modal-header">
         <h3><i class="fa-solid fa-ghost"></i> Secret Wall</h3>
-        <button type="button" class="close-btn" id="gb-close"><i class="fa-solid fa-xmark"></i></button>
+        <button type="button" class="close-btn sfx-hover" id="gb-close"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <p class="modal-sub">You found the easter egg! Leave a note below (saved permanently in the cloud).</p>
       
       <form class="gb-form" id="gb-form">
         <input type="text" id="gb-author" class="gb-input" placeholder="Your name or @tag" maxlength="24" required />
         <input type="text" id="gb-text" class="gb-input" placeholder="Write a message..." maxlength="140" required />
-        <button type="submit" class="gb-submit" id="gb-submit-btn">Post Note</button>
+        <button type="submit" class="gb-submit sfx-hover" id="gb-submit-btn">Post Note</button>
       </form>
 
       <div class="gb-messages" id="gb-messages">
@@ -999,7 +1153,142 @@
     </div>
   </div>
 
-  <!-- 1. Custom Cursor Trail & Confetti Particle Engine -->
+  <!-- 1. Interactive Web Audio Sound FX Engine -->
+  <script>
+    let sfxEnabled = localStorage.getItem("nino_sfx_enabled") !== "false";
+    let audioCtx = null;
+
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+      if (audioCtx && audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playSFX(type) {
+      if (!sfxEnabled) return;
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+
+      const now = ctx.currentTime;
+
+      if (type === "hover") {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.exponentialRampToValueAtTime(760, now + 0.035);
+        gain.gain.setValueAtTime(0.025, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      } else if (type === "click") {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(340, now);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 0.07);
+        gain.gain.setValueAtTime(0.06, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.07);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.075);
+      } else if (type === "open") {
+        [440, 587.33].forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+          gain.gain.setValueAtTime(0.04, now + idx * 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.05 + 0.14);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + idx * 0.05);
+          osc.stop(now + idx * 0.05 + 0.15);
+        });
+      } else if (type === "success") {
+        [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.055);
+          gain.gain.setValueAtTime(0.045, now + idx * 0.055);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.055 + 0.25);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + idx * 0.055);
+          osc.stop(now + idx * 0.055 + 0.26);
+        });
+      }
+    }
+
+    function updateSFXButton() {
+      document.getElementById("sfx-icon").className = sfxEnabled
+        ? "fa-solid fa-volume-high"
+        : "fa-solid fa-volume-xmark";
+      document.getElementById("sfx-label").textContent = sfxEnabled ? "SFX On" : "SFX Off";
+    }
+    updateSFXButton();
+
+    document.getElementById("sfx-toggle-btn").addEventListener("click", () => {
+      sfxEnabled = !sfxEnabled;
+      localStorage.setItem("nino_sfx_enabled", sfxEnabled);
+      updateSFXButton();
+      if (sfxEnabled) playSFX("open");
+    });
+
+    document.querySelectorAll(".sfx-hover").forEach(el => {
+      el.addEventListener("mouseenter", () => playSFX("hover"));
+    });
+
+    document.querySelectorAll(".sfx-click").forEach(el => {
+      el.addEventListener("click", () => playSFX("click"));
+    });
+  </script>
+
+  <!-- 2. Corner Social Stats Tab Logic -->
+  <script>
+    const statsCorner = document.getElementById("stats-corner");
+    const statsToggleBtn = document.getElementById("stats-toggle-btn");
+
+    statsToggleBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const opening = !statsCorner.classList.contains("open");
+      statsCorner.classList.toggle("open");
+      playSFX(opening ? "open" : "click");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!statsCorner.contains(e.target)) {
+        statsCorner.classList.remove("open");
+      }
+    });
+
+    async function loadSocialStats() {
+      try {
+        const res = await fetch("https://api.github.com/users/NinoTheNoob");
+        if (res.ok) {
+          const gh = await res.json();
+          document.getElementById("stat-gh-followers").textContent = gh.followers ?? 0;
+          document.getElementById("stat-gh-repos").textContent = gh.public_repos ?? 0;
+          document.getElementById("stats-pill-summary").textContent = `${gh.public_repos ?? 0} Repos`;
+        }
+      } catch (err) {
+        document.getElementById("stat-gh-followers").textContent = "—";
+        document.getElementById("stat-gh-repos").textContent = "—";
+      }
+    }
+    loadSocialStats();
+  </script>
+
+  <!-- 3. Custom Cursor Trail & Confetti Particle Engine -->
   <script>
     const canvas = document.getElementById('fx-canvas');
     const ctx = canvas.getContext('2d');
@@ -1103,7 +1392,7 @@
     animateFX();
   </script>
 
-  <!-- 2. 3D Card Tilt & Cursor Spotlight Script -->
+  <!-- 4. 3D Card Tilt & Cursor Spotlight Script -->
   <script>
     document.querySelectorAll('.tilt-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
@@ -1128,7 +1417,7 @@
     });
   </script>
 
-  <!-- 3. Real-Time Lanyard WebSocket + Spotify History -->
+  <!-- 5. Real-Time Lanyard WebSocket + Spotify History -->
   <script>
     const DISCORD_USER_ID = "1519019638661451897";
     const SPOTIFY_HISTORY_KEY = "nino_spotify_recent_tracks_v1";
@@ -1271,17 +1560,20 @@
     connectLanyardWebSocket();
   </script>
 
-  <!-- 4. Live Page View Counter & Persistent Cloud Easter Egg Guestbook -->
+  <!-- 6. Live Page View Counter & Persistent Cloud Easter Egg Guestbook -->
   <script>
     async function updateViewCount() {
       try {
         const res = await fetch("https://api.counterapi.dev/v1/ninothenoob-portfolio/views/up");
         const data = await res.json();
         if (data && data.count) {
-          document.getElementById("view-count").textContent = data.count.toLocaleString();
+          const formatted = data.count.toLocaleString();
+          document.getElementById("view-count").textContent = formatted;
+          document.getElementById("stat-corner-views").textContent = formatted;
         }
       } catch (err) {
         document.getElementById("view-count").textContent = "1";
+        document.getElementById("stat-corner-views").textContent = "1";
       }
     }
     updateViewCount();
@@ -1327,16 +1619,21 @@
     }
 
     document.getElementById("easter-egg-btn").addEventListener("click", () => {
+      playSFX("open");
       modal.classList.add("open");
       loadMessages();
     });
 
     document.getElementById("gb-close").addEventListener("click", () => {
+      playSFX("click");
       modal.classList.remove("open");
     });
 
     modal.addEventListener("click", (e) => {
-      if (e.target === modal) modal.classList.remove("open");
+      if (e.target === modal) {
+        playSFX("click");
+        modal.classList.remove("open");
+      }
     });
 
     document.getElementById("gb-form").addEventListener("submit", async (e) => {
@@ -1371,6 +1668,7 @@
 
       document.getElementById("gb-text").value = "";
       renderMessages(currentList);
+      playSFX("success");
       triggerConfetti();
       btn.disabled = false;
       btn.textContent = "Post Note";
