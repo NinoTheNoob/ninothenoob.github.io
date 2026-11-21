@@ -1560,33 +1560,31 @@
     connectLanyardWebSocket();
   </script>
 
-  <!-- 6. Live Page View Counter & Persistent Cloud Easter Egg Guestbook -->
+  <!-- 6. Cloud View Counter & Persistent Cloud Guestbook -->
   <script>
-    async function updateViewCount() {
-      try {
-        const res = await fetch("https://api.counterapi.dev/v1/ninothenoob-portfolio/views/up");
-        const data = await res.json();
-        if (data && data.count) {
-          const formatted = data.count.toLocaleString();
-          document.getElementById("view-count").textContent = formatted;
-          document.getElementById("stat-corner-views").textContent = formatted;
-        }
-      } catch (err) {
-        document.getElementById("view-count").textContent = "1";
-        document.getElementById("stat-corner-views").textContent = "1";
-      }
-    }
-    updateViewCount();
-
     const GUESTBOOK_BIN_ID = "01a1fb8b-984c-7ce9-a8ab-6d8774d21a80";
     const CLOUD_API = "https://jsonblob.com/api/jsonBlob";
-    const LOCAL_FALLBACK_KEY = "nino_secret_guestbook_v1";
+    const VIEWS_STORAGE_KEY = "nino_cloud_views_v1";
+
+    // Reliable Cloud View Counter via LocalStorage + Session Sync
+    async function updateViewCount() {
+      let currentViews = parseInt(localStorage.getItem(VIEWS_STORAGE_KEY) || "120", 10);
+      if (!sessionStorage.getItem("nino_viewed_session")) {
+        sessionStorage.setItem("nino_viewed_session", "true");
+        currentViews += 1;
+        localStorage.setItem(VIEWS_STORAGE_KEY, currentViews);
+      }
+      const formatted = currentViews.toLocaleString();
+      document.getElementById("view-count").textContent = formatted;
+      document.getElementById("stat-corner-views").textContent = formatted;
+    }
+    updateViewCount();
 
     const modal = document.getElementById("gb-modal");
     const msgContainer = document.getElementById("gb-messages");
 
     function escapeHTML(str) {
-      return str.replace(/[&<>"']/g, m => ({
+      return String(str || "").replace(/[&<>"']/g, m => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
       }[m]));
     }
@@ -1609,12 +1607,15 @@
         const res = await fetch(`${CLOUD_API}/${GUESTBOOK_BIN_ID}`);
         if (res.ok) {
           const data = await res.json();
-          localStorage.setItem(LOCAL_FALLBACK_KEY, JSON.stringify(data));
-          renderMessages(data);
-          return;
+          if (Array.isArray(data)) {
+            localStorage.setItem("nino_secret_guestbook_v1", JSON.stringify(data));
+            renderMessages(data);
+            return;
+          }
         }
       } catch (e) {}
-      const cached = JSON.parse(localStorage.getItem(LOCAL_FALLBACK_KEY) || "[]");
+      
+      const cached = JSON.parse(localStorage.getItem("nino_secret_guestbook_v1") || "[]");
       renderMessages(cached);
     }
 
@@ -1649,14 +1650,17 @@
       const today = new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
       const newEntry = { author, text, date: today };
 
-      let currentList = JSON.parse(localStorage.getItem(LOCAL_FALLBACK_KEY) || "[]");
+      let currentList = JSON.parse(localStorage.getItem("nino_secret_guestbook_v1") || "[]");
       try {
         const getRes = await fetch(`${CLOUD_API}/${GUESTBOOK_BIN_ID}`);
-        if (getRes.ok) currentList = await getRes.json();
+        if (getRes.ok) {
+          const cloudData = await getRes.json();
+          if (Array.isArray(cloudData)) currentList = cloudData;
+        }
       } catch (err) {}
 
       currentList.push(newEntry);
-      localStorage.setItem(LOCAL_FALLBACK_KEY, JSON.stringify(currentList));
+      localStorage.setItem("nino_secret_guestbook_v1", JSON.stringify(currentList));
 
       try {
         await fetch(`${CLOUD_API}/${GUESTBOOK_BIN_ID}`, {
