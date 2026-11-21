@@ -425,7 +425,7 @@
       margin-top: 34px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       font-size: 0.78rem;
       color: var(--text-muted);
     }
@@ -438,6 +438,9 @@
       color: var(--text-main);
       text-decoration: none;
       font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* Mobile Responsive */
@@ -644,6 +647,7 @@
 
   <footer>
     <a href="https://github.com/NinoTheNoob" target="_blank" class="footer-pill">GitHub</a>
+    <span class="footer-pill"><i class="fa-solid fa-eye"></i> <span id="view-count">...</span> views</span>
     <span>&copy; 2026 Nino</span>
   </footer>
 
@@ -672,8 +676,9 @@
         if (!success) return;
 
         const user = data.discord_user;
+        const avatarExt = user.avatar && user.avatar.startsWith("a_") ? "gif" : "png";
         const avatarUrl = user.avatar
-          ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`
+          ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${avatarExt}?size=256`
           : `https://cdn.discordapp.com/embed/avatars/0.png`;
 
         document.getElementById("discord-pfp").src = avatarUrl;
@@ -700,6 +705,22 @@
 
     fetchDiscordStatus();
     setInterval(fetchDiscordStatus, 30000);
+  </script>
+
+  <!-- Live Page View Counter -->
+  <script>
+    async function updateViewCount() {
+      try {
+        const res = await fetch("https://api.counterapi.dev/v1/ninothenoob-portfolio/views/up");
+        const data = await res.json();
+        if (data && data.count) {
+          document.getElementById("view-count").textContent = data.count.toLocaleString();
+        }
+      } catch (err) {
+        document.getElementById("view-count").textContent = "1";
+      }
+    }
+    updateViewCount();
   </script>
 </body>
 </html>
