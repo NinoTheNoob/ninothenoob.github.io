@@ -18,6 +18,7 @@
       --text-main: #f4f8fb;
       --text-muted: rgba(235, 245, 252, 0.74);
       --accent: #7dd3fc;
+      --bg-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80');
     }
 
     * {
@@ -31,9 +32,15 @@
       font-family: 'Inter', sans-serif;
       color: var(--text-main);
       min-height: 100vh;
-      background: 
-        linear-gradient(180deg, rgba(16, 36, 48, 0.35) 0%, rgba(12, 28, 38, 0.65) 100%),
-        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80') center/cover fixed no-repeat;
+      background-color: #0f232e;
+      background-image: 
+        linear-gradient(180deg, rgba(16, 36, 48, 0.35) 0%, rgba(12, 28, 38, 0.68) 100%),
+        var(--bg-image);
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      transition: background-image 0.5s ease-in-out;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -71,6 +78,7 @@
       grid-template-columns: 1.25fr 1fr;
       gap: 22px;
       align-items: start;
+      perspective: 1200px;
     }
 
     .column {
@@ -79,8 +87,10 @@
       gap: 20px;
     }
 
-    /* Frosted Glass Panel */
+    /* Frosted Glass Panel with 3D Tilt & Cursor Glow */
     .glass-panel {
+      position: relative;
+      overflow: hidden;
       background: var(--glass-bg);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
@@ -88,6 +98,30 @@
       border-radius: 20px;
       padding: 24px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .glass-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.11),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .glass-panel:hover::before {
+      opacity: 1;
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     /* Profile Card (Top Left) */
@@ -248,47 +282,47 @@
       color: #a5f3fc;
     }
 
-    /* Tech Stack & Games Grid (Bottom Left - 6 Items in One Line) */
-    .icon-grid {
+    /* Separated Vertical Languages & Games Grid */
+    .split-stack-grid {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .vertical-list {
+      display: flex;
+      flex-direction: column;
       gap: 8px;
     }
 
-    .icon-tile {
+    .vertical-item {
       background: var(--glass-card);
       border: 1px solid var(--glass-border);
       border-radius: 12px;
-      padding: 12px 4px;
+      padding: 10px 14px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
-      text-decoration: none;
+      gap: 12px;
       color: var(--text-main);
       transition: all 0.2s ease;
     }
 
-    .icon-tile:hover {
+    .vertical-item:hover {
       background: var(--glass-card-hover);
-      transform: translateY(-3px);
+      transform: translateX(4px);
     }
 
-    .icon-tile i {
-      font-size: 1.1rem;
+    .vertical-item i {
+      width: 18px;
+      text-align: center;
+      font-size: 0.95rem;
       opacity: 0.9;
     }
 
-    .icon-tile span {
-      font-size: 0.6rem;
-      color: var(--text-muted);
+    .vertical-item span {
+      font-size: 0.82rem;
       font-weight: 500;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: 100%;
+      color: var(--text-main);
     }
 
     /* Right Column Highlight Cards */
@@ -298,12 +332,6 @@
       gap: 14px;
       text-decoration: none;
       color: var(--text-main);
-      transition: all 0.2s ease;
-    }
-
-    .feature-card:hover {
-      background: rgba(42, 76, 95, 0.58);
-      transform: translateY(-2px);
     }
 
     .feature-icon {
@@ -344,23 +372,169 @@
     footer {
       margin-top: 34px;
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       font-size: 0.78rem;
       color: var(--text-muted);
     }
 
     .footer-pill {
       background: var(--glass-bg);
+      backdrop-filter: blur(12px);
       border: 1px solid var(--glass-border);
       padding: 6px 14px;
       border-radius: 999px;
       color: var(--text-main);
       text-decoration: none;
       font-weight: 500;
+      font-family: inherit;
+      font-size: 0.78rem;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .footer-pill:hover {
+      background: var(--glass-card-hover);
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Secret Guestbook Modal (Easter Egg) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 18, 24, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(24, 46, 58, 0.88);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .modal-header h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #fff;
+    }
+
+    .modal-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .gb-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .gb-input {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 9px 12px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    .gb-input:focus {
+      border-color: var(--accent);
+    }
+
+    .gb-submit {
+      background: rgba(125, 211, 252, 0.22);
+      border: 1px solid rgba(125, 211, 252, 0.45);
+      border-radius: 10px;
+      padding: 9px;
+      color: #e0f2fe;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .gb-submit:hover {
+      background: rgba(125, 211, 252, 0.35);
+    }
+
+    .gb-messages {
+      max-height: 190px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 4px;
+    }
+
+    .gb-msg-item {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 9px 12px;
+    }
+
+    .gb-msg-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .gb-msg-top span {
+      color: var(--text-muted);
+      font-weight: 400;
+      font-size: 0.65rem;
+    }
+
+    .gb-msg-body {
+      font-size: 0.78rem;
+      color: var(--text-main);
+      word-break: break-word;
     }
 
     /* Mobile Responsive */
@@ -374,9 +548,6 @@
       }
       .pill-row {
         justify-content: center;
-      }
-      .icon-grid {
-        grid-template-columns: repeat(3, 1fr);
       }
     }
   </style>
@@ -396,7 +567,7 @@
     <div class="column">
 
       <!-- Profile & Bio Card -->
-      <section class="glass-panel profile-card" id="about">
+      <section class="glass-panel tilt-card profile-card" id="about">
         <div class="profile-info">
           <h2>NINO</h2>
           <div class="profile-subtitle">Developer &bull; Gamer</div>
@@ -436,7 +607,7 @@
       </section>
 
       <!-- Live Discord Presence Card -->
-      <section class="glass-panel" id="discord">
+      <section class="glass-panel tilt-card" id="discord">
         <h3 class="section-heading">Discord Presence</h3>
         <div class="discord-box">
           <div class="discord-avatar-wrap">
@@ -451,36 +622,46 @@
         </div>
       </section>
 
-      <!-- Tech Stack & Games One-Liner (Monochrome) -->
-      <section class="glass-panel" id="stack">
-        <h3 class="section-heading">Tech Stack &amp; Games</h3>
-        <div class="icon-grid">
-          <div class="icon-tile" title="Rust">
-            <i class="fa-solid fa-gear"></i>
-            <span>Rust</span>
+      <!-- Separated Vertical Languages & Games -->
+      <div class="split-stack-grid" id="stack">
+        <!-- Languages Panel -->
+        <section class="glass-panel tilt-card">
+          <h3 class="section-heading">Languages</h3>
+          <div class="vertical-list">
+            <div class="vertical-item">
+              <i class="fa-solid fa-gear"></i>
+              <span>Rust</span>
+            </div>
+            <div class="vertical-item">
+              <i class="fa-solid fa-code"></i>
+              <span>Python</span>
+            </div>
           </div>
-          <div class="icon-tile" title="Python">
-            <i class="fa-solid fa-code"></i>
-            <span>Python</span>
+        </section>
+
+        <!-- Games Panel -->
+        <section class="glass-panel tilt-card">
+          <h3 class="section-heading">Games</h3>
+          <div class="vertical-list">
+            <div class="vertical-item">
+              <i class="fa-solid fa-cube"></i>
+              <span>Minecraft</span>
+            </div>
+            <div class="vertical-item">
+              <i class="fa-solid fa-robot"></i>
+              <span>Titanfall 2</span>
+            </div>
+            <div class="vertical-item">
+              <i class="fa-solid fa-gamepad"></i>
+              <span>Roblox</span>
+            </div>
+            <div class="vertical-item">
+              <i class="fa-solid fa-crosshairs"></i>
+              <span>R6 Siege</span>
+            </div>
           </div>
-          <div class="icon-tile" title="Minecraft">
-            <i class="fa-solid fa-cube"></i>
-            <span>Minecraft</span>
-          </div>
-          <div class="icon-tile" title="Titanfall 2">
-            <i class="fa-solid fa-robot"></i>
-            <span>Titanfall 2</span>
-          </div>
-          <div class="icon-tile" title="Roblox">
-            <i class="fa-solid fa-gamepad"></i>
-            <span>Roblox</span>
-          </div>
-          <div class="icon-tile" title="Rainbow Six Siege">
-            <i class="fa-solid fa-crosshairs"></i>
-            <span>R6 Siege</span>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
     </div>
 
@@ -489,7 +670,7 @@
 
       <div class="right-section-label">Socials</div>
 
-      <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" class="glass-panel feature-card">
+      <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" class="glass-panel tilt-card feature-card">
         <div class="feature-icon"><i class="fa-brands fa-youtube"></i></div>
         <div class="feature-content">
           <h3>YouTube (@LinkNoir-x5p)</h3>
@@ -498,7 +679,7 @@
         </div>
       </a>
 
-      <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" class="glass-panel feature-card">
+      <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" class="glass-panel tilt-card feature-card">
         <div class="feature-icon"><i class="fa-brands fa-steam"></i></div>
         <div class="feature-content">
           <h3>Steam (Nin00b)</h3>
@@ -507,7 +688,7 @@
         </div>
       </a>
 
-      <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="glass-panel feature-card">
+      <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" class="glass-panel tilt-card feature-card">
         <div class="feature-icon"><i class="fa-solid fa-gamepad"></i></div>
         <div class="feature-content">
           <h3>Roblox Profile</h3>
@@ -518,7 +699,7 @@
 
       <div class="right-section-label">Code &amp; Community</div>
 
-      <a href="https://github.com/NinoTheNoob" target="_blank" class="glass-panel feature-card">
+      <a href="https://github.com/NinoTheNoob" target="_blank" class="glass-panel tilt-card feature-card">
         <div class="feature-icon"><i class="fa-brands fa-github"></i></div>
         <div class="feature-content">
           <h3>GitHub (NinoTheNoob)</h3>
@@ -527,7 +708,7 @@
         </div>
       </a>
 
-      <a href="https://discord.com/users/1519019638661451897" target="_blank" class="glass-panel feature-card">
+      <a href="https://discord.com/users/1519019638661451897" target="_blank" class="glass-panel tilt-card feature-card">
         <div class="feature-icon"><i class="fa-brands fa-discord"></i></div>
         <div class="feature-content">
           <h3>Discord (Nino / @Ninwwo)</h3>
@@ -541,11 +722,104 @@
 
   <footer>
     <a href="https://github.com/NinoTheNoob" target="_blank" class="footer-pill">GitHub</a>
-    <span class="footer-pill"><i class="fa-solid fa-eye"></i> <span id="view-count">...</span> views</span>
+    <button type="button" class="footer-pill" id="bg-toggle" title="Switch Background">
+      <i class="fa-solid fa-image"></i> <span id="bg-name">Misty Valley</span>
+    </button>
+    <button type="button" class="footer-pill" id="easter-egg-btn" title="Psst... click me">
+      <i class="fa-solid fa-eye"></i> <span id="view-count">...</span> views
+    </button>
     <span>&copy; 2026 Nino</span>
   </footer>
 
-  <!-- Live Discord Presence Script (via Lanyard API) -->
+  <!-- Secret Guestbook Easter Egg Modal -->
+  <div class="modal-backdrop" id="gb-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-ghost"></i> Secret Wall</h3>
+        <button type="button" class="close-btn" id="gb-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p class="modal-sub">You found the easter egg! Leave a note below (saved permanently in the cloud).</p>
+      
+      <form class="gb-form" id="gb-form">
+        <input type="text" id="gb-author" class="gb-input" placeholder="Your name or @tag" maxlength="24" required />
+        <input type="text" id="gb-text" class="gb-input" placeholder="Write a message..." maxlength="140" required />
+        <button type="submit" class="gb-submit" id="gb-submit-btn">Post Note</button>
+      </form>
+
+      <div class="gb-messages" id="gb-messages">
+        <div class="gb-msg-item">
+          <div class="gb-msg-body" style="opacity:0.7;">Loading notes...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. 3D Card Tilt & Cursor Spotlight Script -->
+  <script>
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Cursor glow coordinates
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+
+        // Subtle 3D tilt calculation
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -4.5;
+        const rotateY = ((x - centerX) / centerX) * 4.5;
+
+        card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
+  </script>
+
+  <!-- 2. Background Wallpaper Switcher -->
+  <script>
+    const wallpapers = [
+      {
+        name: "Misty Valley",
+        url: "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80')"
+      },
+      {
+        name: "Starry Peaks",
+        url: "url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2000&q=80')"
+      },
+      {
+        name: "Night Rain",
+        url: "url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=2000&q=80')"
+      },
+      {
+        name: "Deep Forest",
+        url: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80')"
+      }
+    ];
+
+    let currentBg = parseInt(localStorage.getItem("nino_bg_idx") || "0", 10);
+    if (isNaN(currentBg) || currentBg >= wallpapers.length) currentBg = 0;
+
+    function applyWallpaper(idx) {
+      document.documentElement.style.setProperty('--bg-image', wallpapers[idx].url);
+      document.getElementById('bg-name').textContent = wallpapers[idx].name;
+      localStorage.setItem("nino_bg_idx", idx);
+    }
+
+    applyWallpaper(currentBg);
+
+    document.getElementById('bg-toggle').addEventListener('click', () => {
+      currentBg = (currentBg + 1) % wallpapers.length;
+      applyWallpaper(currentBg);
+    });
+  </script>
+
+  <!-- 3. Live Discord Presence Script (via Lanyard API) -->
   <script>
     const DISCORD_USER_ID = "1519019638661451897";
 
@@ -600,8 +874,9 @@
     setInterval(fetchDiscordStatus, 30000);
   </script>
 
-  <!-- Live Page View Counter -->
+  <!-- 4. Live Page View Counter & Persistent Cloud Easter Egg Guestbook -->
   <script>
+    // View counter
     async function updateViewCount() {
       try {
         const res = await fetch("https://api.counterapi.dev/v1/ninothenoob-portfolio/views/up");
@@ -614,6 +889,97 @@
       }
     }
     updateViewCount();
+
+    // Persistent Cloud Guestbook (survives HTML code changes!)
+    // Tip: Create a free blank JSON array [] at https://jsonblob.com and paste its ID below to share globally
+    const GUESTBOOK_BIN_ID = "019c7b8a-4e11-7d2a-9f81-c3a90e5128b4";
+    const CLOUD_API = "https://jsonblob.com/api/jsonBlob";
+    const LOCAL_FALLBACK_KEY = "nino_secret_guestbook_v1";
+
+    const modal = document.getElementById("gb-modal");
+    const msgContainer = document.getElementById("gb-messages");
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[m]));
+    }
+
+    function renderMessages(list) {
+      if (!list || list.length === 0) {
+        msgContainer.innerHTML = `<div class="gb-msg-item"><div class="gb-msg-body" style="opacity:0.7;">No notes yet — be the first to sign!</div></div>`;
+        return;
+      }
+      msgContainer.innerHTML = list.slice().reverse().map(item => `
+        <div class="gb-msg-item">
+          <div class="gb-msg-top">${escapeHTML(item.author)} <span>${escapeHTML(item.date)}</span></div>
+          <div class="gb-msg-body">${escapeHTML(item.text)}</div>
+        </div>
+      `).join("");
+    }
+
+    async function loadMessages() {
+      try {
+        const res = await fetch(`${CLOUD_API}/${GUESTBOOK_BIN_ID}`);
+        if (res.ok) {
+          const data = await res.json();
+          localStorage.setItem(LOCAL_FALLBACK_KEY, JSON.stringify(data));
+          renderMessages(data);
+          return;
+        }
+      } catch (e) {}
+      const cached = JSON.parse(localStorage.getItem(LOCAL_FALLBACK_KEY) || "[]");
+      renderMessages(cached);
+    }
+
+    document.getElementById("easter-egg-btn").addEventListener("click", () => {
+      modal.classList.add("open");
+      loadMessages();
+    });
+
+    document.getElementById("gb-close").addEventListener("click", () => {
+      modal.classList.remove("open");
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.remove("open");
+    });
+
+    document.getElementById("gb-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const author = document.getElementById("gb-author").value.trim();
+      const text = document.getElementById("gb-text").value.trim();
+      if (!author || !text) return;
+
+      const btn = document.getElementById("gb-submit-btn");
+      btn.disabled = true;
+      btn.textContent = "Posting...";
+
+      const today = new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      const newEntry = { author, text, date: today };
+
+      let currentList = JSON.parse(localStorage.getItem(LOCAL_FALLBACK_KEY) || "[]");
+      try {
+        const getRes = await fetch(`${CLOUD_API}/${GUESTBOOK_BIN_ID}`);
+        if (getRes.ok) currentList = await getRes.json();
+      } catch (err) {}
+
+      currentList.push(newEntry);
+      localStorage.setItem(LOCAL_FALLBACK_KEY, JSON.stringify(currentList));
+
+      try {
+        await fetch(`${CLOUD_API}/${GUESTBOOK_BIN_ID}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(currentList)
+        });
+      } catch (err) {}
+
+      document.getElementById("gb-text").value = "";
+      renderMessages(currentList);
+      btn.disabled = false;
+      btn.textContent = "Post Note";
+    });
   </script>
 </body>
 </html>
