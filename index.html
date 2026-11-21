@@ -917,8 +917,8 @@
         <span class="stats-row-val">@LinkNoir-x5p</span>
       </a>
       <div class="stats-row" style="cursor:default;">
-        <span class="stats-row-left"><i class="fa-solid fa-eye"></i> Total Visits</span>
-        <span class="stats-row-val" id="stat-corner-views">...</span>
+        <span class="stats-row-left"><i class="fa-solid fa-hand-pointer"></i> Total Clicks</span>
+        <span class="stats-row-val" id="stat-corner-clicks">0</span>
       </div>
     </div>
 
@@ -1122,7 +1122,7 @@
       <i class="fa-solid fa-mug-hot"></i> Support
     </a>
     <button type="button" class="footer-pill sfx-hover" id="easter-egg-btn" title="Psst... click me">
-      <i class="fa-solid fa-eye"></i> <span id="view-count">...</span> views
+      <i class="fa-solid fa-hand-pointer"></i> <span id="click-count">0</span> clicks
     </button>
     <button type="button" class="footer-pill sfx-hover" id="sfx-toggle-btn" title="Toggle UI Sound Effects">
       <i class="fa-solid fa-volume-high" id="sfx-icon"></i> <span id="sfx-label">SFX On</span>
@@ -1560,25 +1560,29 @@
     connectLanyardWebSocket();
   </script>
 
-  <!-- 6. Cloud View Counter & Persistent Cloud Guestbook -->
+  <!-- 6. Live Click Counter & Persistent Cloud Guestbook -->
   <script>
     const GUESTBOOK_BIN_ID = "01a1fb8b-984c-7ce9-a8ab-6d8774d21a80";
     const CLOUD_API = "https://jsonblob.com/api/jsonBlob";
-    const VIEWS_STORAGE_KEY = "nino_cloud_views_v1";
+    const CLICKS_STORAGE_KEY = "nino_live_clicks_v1";
 
-    // Reliable Cloud View Counter via LocalStorage + Session Sync
-    async function updateViewCount() {
-      let currentViews = parseInt(localStorage.getItem(VIEWS_STORAGE_KEY) || "120", 10);
-      if (!sessionStorage.getItem("nino_viewed_session")) {
-        sessionStorage.setItem("nino_viewed_session", "true");
-        currentViews += 1;
-        localStorage.setItem(VIEWS_STORAGE_KEY, currentViews);
-      }
-      const formatted = currentViews.toLocaleString();
-      document.getElementById("view-count").textContent = formatted;
-      document.getElementById("stat-corner-views").textContent = formatted;
+    // Real-Time Click Counter Tracker
+    let totalClicks = parseInt(localStorage.getItem(CLICKS_STORAGE_KEY) || "0", 10);
+    const clickCountEl = document.getElementById("click-count");
+    const cornerClicksEl = document.getElementById("stat-corner-clicks");
+
+    function updateClickDisplay() {
+      const formatted = totalClicks.toLocaleString();
+      clickCountEl.textContent = formatted;
+      cornerClicksEl.textContent = formatted;
     }
-    updateViewCount();
+    updateClickDisplay();
+
+    window.addEventListener("click", () => {
+      totalClicks += 1;
+      localStorage.setItem(CLICKS_STORAGE_KEY, totalClicks);
+      updateClickDisplay();
+    });
 
     const modal = document.getElementById("gb-modal");
     const msgContainer = document.getElementById("gb-messages");
