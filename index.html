@@ -152,25 +152,26 @@
       margin-bottom: 16px;
     }
 
-    /* Quick Action Pills */
+    /* Compact 1-Line Quick Action Pills */
     .pill-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 18px;
+      flex-wrap: nowrap;
+      gap: 6px;
+      margin-bottom: 16px;
     }
 
     .pill-btn {
       background: var(--glass-card);
       border: 1px solid var(--glass-border);
-      border-radius: 10px;
-      padding: 7px 12px;
+      border-radius: 9px;
+      padding: 6px 8px;
       text-decoration: none;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 66px;
+      flex: 1;
+      min-width: 0;
       transition: all 0.2s ease;
     }
 
@@ -181,16 +182,21 @@
     }
 
     .pill-btn span.tag {
-      font-size: 0.55rem;
+      font-size: 0.5rem;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.5px;
       color: var(--text-muted);
     }
 
     .pill-btn span.label {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 600;
       margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      text-align: center;
     }
 
     .about-title {
@@ -226,7 +232,7 @@
     .section-heading {
       font-size: 1.05rem;
       font-weight: 700;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .right-section-label {
@@ -247,8 +253,8 @@
 
     .discord-avatar-wrap {
       position: relative;
-      width: 54px;
-      height: 54px;
+      width: 50px;
+      height: 50px;
       flex-shrink: 0;
     }
 
@@ -264,26 +270,26 @@
       position: absolute;
       bottom: 1px;
       right: 1px;
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
       background: #80848e;
       border: 2px solid #1e3847;
     }
 
     .discord-details h4 {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
     }
 
     .discord-details .handle {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .discord-details .activity {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: #a5f3fc;
     }
 
@@ -295,14 +301,14 @@
 
     .spotify-widget {
       display: none;
-      margin-top: 16px;
-      padding: 12px 14px;
+      margin-top: 14px;
+      padding: 10px 12px;
       background: rgba(15, 28, 36, 0.55);
       border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 14px;
+      border-radius: 12px;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
     }
 
     .spotify-widget.active {
@@ -312,19 +318,19 @@
     .spotify-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       min-width: 0;
     }
 
     .vinyl-disc {
       position: relative;
-      width: 54px;
-      height: 54px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
       flex-shrink: 0;
       background: radial-gradient(circle, #181818 0%, #090909 65%, #222 100%);
-      padding: 6px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+      padding: 5px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
       animation: spinVinyl 7s linear infinite;
     }
 
@@ -341,8 +347,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 11px;
-      height: 11px;
+      width: 9px;
+      height: 9px;
       background: #132530;
       border: 2px solid rgba(255, 255, 255, 0.45);
       border-radius: 50%;
@@ -356,17 +362,17 @@
     .track-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-size: 0.62rem;
+      gap: 4px;
+      font-size: 0.58rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.7px;
       color: var(--spotify-green);
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
 
     .track-title {
-      font-size: 0.86rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #fff;
       white-space: nowrap;
@@ -375,7 +381,7 @@
     }
 
     .track-artist {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       color: var(--text-muted);
       white-space: nowrap;
       overflow: hidden;
@@ -386,13 +392,13 @@
       flex-shrink: 0;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 7px 12px;
+      gap: 5px;
+      padding: 6px 10px;
       border-radius: 999px;
       background: rgba(29, 185, 84, 0.18);
       border: 1px solid rgba(29, 185, 84, 0.45);
       color: #dcfce7;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.2s ease;
@@ -407,8 +413,8 @@
     /* Spotify History Drawer */
     .spotify-history {
       display: none;
-      margin-top: 14px;
-      padding-top: 12px;
+      margin-top: 12px;
+      padding-top: 10px;
       border-top: 1px solid rgba(255, 255, 255, 0.12);
     }
 
@@ -417,32 +423,32 @@
     }
 
     .history-label {
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.9px;
+      letter-spacing: 0.8px;
       color: var(--text-muted);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .history-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
 
     .history-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      padding: 6px 10px;
+      gap: 8px;
+      padding: 5px 8px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
+      border-radius: 8px;
       text-decoration: none;
       color: var(--text-main);
       transition: background 0.2s;
@@ -455,14 +461,14 @@
     .history-item-left {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 8px;
       min-width: 0;
     }
 
     .history-item-left img {
-      width: 26px;
-      height: 26px;
-      border-radius: 5px;
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
       object-fit: cover;
       flex-shrink: 0;
     }
@@ -472,7 +478,7 @@
     }
 
     .history-item-title {
-      font-size: 0.76rem;
+      font-size: 0.72rem;
       font-weight: 600;
       white-space: nowrap;
       overflow: hidden;
@@ -480,7 +486,7 @@
     }
 
     .history-item-artist {
-      font-size: 0.66rem;
+      font-size: 0.62rem;
       color: var(--text-muted);
       white-space: nowrap;
       overflow: hidden;
@@ -488,7 +494,7 @@
     }
 
     .history-item i {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
       flex-shrink: 0;
     }
@@ -503,35 +509,35 @@
     .vertical-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
 
     .vertical-item {
       background: var(--glass-card);
       border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 10px 14px;
+      border-radius: 10px;
+      padding: 8px 12px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       color: var(--text-main);
       transition: all 0.2s ease;
     }
 
     .vertical-item:hover {
       background: var(--glass-card-hover);
-      transform: translateX(4px);
+      transform: translateX(3px);
     }
 
     .vertical-item i {
-      width: 18px;
+      width: 16px;
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       opacity: 0.9;
     }
 
     .vertical-item span {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 500;
       color: var(--text-main);
     }
@@ -762,7 +768,7 @@
         text-align: center;
       }
       .pill-row {
-        justify-content: center;
+        flex-wrap: wrap;
       }
     }
   </style>
@@ -1046,7 +1052,6 @@
     function animateFX() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Render Cursor Trail
       for (let i = trailParticles.length - 1; i >= 0; i--) {
         const p = trailParticles[i];
         p.x += p.vx;
@@ -1070,12 +1075,11 @@
         ctx.restore();
       }
 
-      // Render Confetti Explosion
       for (let i = confettiParticles.length - 1; i >= 0; i--) {
         const c = confettiParticles[i];
         c.x += c.vx;
         c.y += c.vy;
-        c.vy += 0.25; // gravity
+        c.vy += 0.25;
         c.vx *= 0.98;
         c.rotation += c.rotSpeed;
         c.alpha -= 0.014;
