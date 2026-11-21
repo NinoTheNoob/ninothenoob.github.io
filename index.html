@@ -11,14 +11,13 @@
 
   <style>
     :root {
-      --glass-bg: rgba(34, 62, 78, 0.44);
+      --glass-bg: rgba(24, 46, 58, 0.55);
       --glass-card: rgba(255, 255, 255, 0.08);
       --glass-card-hover: rgba(255, 255, 255, 0.15);
       --glass-border: rgba(255, 255, 255, 0.18);
       --text-main: #f4f8fb;
       --text-muted: rgba(235, 245, 252, 0.74);
       --accent: #7dd3fc;
-      --bg-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80');
     }
 
     * {
@@ -32,26 +31,45 @@
       font-family: 'Inter', sans-serif;
       color: var(--text-main);
       min-height: 100vh;
-      background-color: #0f232e;
-      background-image: 
-        linear-gradient(180deg, rgba(16, 36, 48, 0.35) 0%, rgba(12, 28, 38, 0.68) 100%),
-        var(--bg-image);
-      background-position: center;
-      background-size: cover;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      transition: background-image 0.5s ease-in-out;
+      background-color: #0b1922;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 40px 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Live 4K Rain Video Background */
+    .rain-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -999;
+      pointer-events: none;
+    }
+
+    /* Dark Cinematic Overlay to keep text readable */
+    .rain-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(180deg, rgba(10, 22, 30, 0.45) 0%, rgba(8, 16, 22, 0.75) 100%);
+      z-index: -998;
+      pointer-events: none;
     }
 
     /* Hero Header */
     .hero-header {
       text-align: center;
       margin-bottom: 32px;
+      z-index: 1;
     }
 
     .hero-header h1 {
@@ -60,7 +78,7 @@
       font-weight: 500;
       letter-spacing: 0.5px;
       margin-bottom: 6px;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     }
 
     .hero-header p {
@@ -79,6 +97,7 @@
       gap: 22px;
       align-items: start;
       perspective: 1200px;
+      z-index: 1;
     }
 
     .column {
@@ -97,7 +116,7 @@
       border: 1px solid var(--glass-border);
       border-radius: 20px;
       padding: 24px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
       transform-style: preserve-3d;
       transition: transform 0.15s ease-out, background 0.2s ease, border-color 0.2s ease;
     }
@@ -378,6 +397,7 @@
       gap: 10px;
       font-size: 0.78rem;
       color: var(--text-muted);
+      z-index: 1;
     }
 
     .footer-pill {
@@ -408,9 +428,9 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(8, 18, 24, 0.72);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(8, 18, 24, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -425,7 +445,7 @@
     .modal-box {
       width: 100%;
       max-width: 440px;
-      background: rgba(24, 46, 58, 0.88);
+      background: rgba(20, 38, 48, 0.92);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
       padding: 24px;
@@ -553,6 +573,12 @@
   </style>
 </head>
 <body>
+
+  <!-- Live 4K Rain Video Background -->
+  <video autoplay muted loop playsinline class="rain-bg">
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-heavy-rain-falling-on-water-surface-41584-large.mp4" type="video/mp4">
+  </video>
+  <div class="rain-overlay"></div>
 
   <!-- Center Title -->
   <header class="hero-header">
@@ -722,16 +748,13 @@
 
   <footer>
     <a href="https://github.com/NinoTheNoob" target="_blank" class="footer-pill">GitHub</a>
-    <button type="button" class="footer-pill" id="bg-toggle" title="Switch Background">
-      <i class="fa-solid fa-image"></i> <span id="bg-name">Misty Valley</span>
-    </button>
     <button type="button" class="footer-pill" id="easter-egg-btn" title="Psst... click me">
       <i class="fa-solid fa-eye"></i> <span id="view-count">...</span> views
     </button>
     <span>&copy; 2026 Nino</span>
   </footer>
 
-  <!-- Secret Guestbook Easter Egg Modal -->
+  <!-- Secret Guestbook Modal (Easter Egg) -->
   <div class="modal-backdrop" id="gb-modal">
     <div class="modal-box">
       <div class="modal-header">
@@ -779,45 +802,7 @@
     });
   </script>
 
-  <!-- 2. Background Wallpaper Switcher -->
-  <script>
-    const wallpapers = [
-      {
-        name: "Misty Valley",
-        url: "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80')"
-      },
-      {
-        name: "Starry Peaks",
-        url: "url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2000&q=80')"
-      },
-      {
-        name: "Night Rain",
-        url: "url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=2000&q=80')"
-      },
-      {
-        name: "Deep Forest",
-        url: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=80')"
-      }
-    ];
-
-    let currentBg = parseInt(localStorage.getItem("nino_bg_idx") || "0", 10);
-    if (isNaN(currentBg) || currentBg >= wallpapers.length) currentBg = 0;
-
-    function applyWallpaper(idx) {
-      document.documentElement.style.setProperty('--bg-image', wallpapers[idx].url);
-      document.getElementById('bg-name').textContent = wallpapers[idx].name;
-      localStorage.setItem("nino_bg_idx", idx);
-    }
-
-    applyWallpaper(currentBg);
-
-    document.getElementById('bg-toggle').addEventListener('click', () => {
-      currentBg = (currentBg + 1) % wallpapers.length;
-      applyWallpaper(currentBg);
-    });
-  </script>
-
-  <!-- 3. Live Discord Presence Script (via Lanyard API) -->
+  <!-- 2. Live Discord Presence Script (via Lanyard API) -->
   <script>
     const DISCORD_USER_ID = "1519019638661451897";
 
@@ -872,7 +857,7 @@
     setInterval(fetchDiscordStatus, 30000);
   </script>
 
-  <!-- 4. Live Page View Counter & Persistent Cloud Easter Egg Guestbook -->
+  <!-- 3. Live Page View Counter & Persistent Cloud Easter Egg Guestbook -->
   <script>
     async function updateViewCount() {
       try {
@@ -887,7 +872,6 @@
     }
     updateViewCount();
 
-    // Persistent Cloud Guestbook Bin ID
     const GUESTBOOK_BIN_ID = "01a1fb8b-984c-7ce9-a8ab-6d8774d21a80";
     const CLOUD_API = "https://jsonblob.com/api/jsonBlob";
     const LOCAL_FALLBACK_KEY = "nino_secret_guestbook_v1";
