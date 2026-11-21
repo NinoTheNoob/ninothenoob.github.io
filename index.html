@@ -37,88 +37,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
-    }
-
-    /* Top Glass Navbar */
-    .navbar {
-      width: 100%;
-      max-width: 1060px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 22px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
-      border-radius: 999px;
-      margin-bottom: 36px;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-decoration: none;
-      color: var(--text-main);
-    }
-
-    .brand img {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--glass-border);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 18px;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: #fff;
-    }
-
-    .nav-socials {
-      display: flex;
-      gap: 8px;
-    }
-
-    .nav-socials a {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--glass-card);
-      border: 1px solid var(--glass-border);
-      display: grid;
-      place-items: center;
-      color: var(--text-main);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
-    }
-
-    .nav-socials a:hover {
-      background: var(--glass-card-hover);
-      transform: translateY(-2px);
+      justify-content: center;
+      padding: 40px 20px;
     }
 
     /* Hero Header */
@@ -458,36 +378,10 @@
       .icon-grid {
         grid-template-columns: repeat(3, 1fr);
       }
-      .nav-links {
-        display: none;
-      }
     }
   </style>
 </head>
 <body>
-
-  <!-- Top Navigation Bar -->
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="#" class="brand">
-        <img src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Nino" alt="Nino Avatar" id="nav-avatar">
-        <span>Nino</span>
-      </a>
-      <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#discord">Discord</a>
-        <a href="#stack">Tech &amp; Games</a>
-      </div>
-    </div>
-
-    <div class="nav-socials">
-      <a href="https://discord.com/users/1519019638661451897" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
-      <a href="https://www.youtube.com/@LinkNoir-x5p" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-      <a href="https://steamcommunity.com/id/Nin00b/" target="_blank" title="Steam"><i class="fa-brands fa-steam"></i></a>
-      <a href="https://github.com/NinoTheNoob" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-      <a href="https://www.roblox.com/users/8032186671/profile" target="_blank" title="Roblox"><i class="fa-solid fa-gamepad"></i></a>
-    </div>
-  </nav>
 
   <!-- Center Title -->
   <header class="hero-header">
@@ -683,7 +577,6 @@
 
         document.getElementById("discord-pfp").src = avatarUrl;
         document.getElementById("main-avatar").src = avatarUrl;
-        document.getElementById("nav-avatar").src = avatarUrl;
         document.getElementById("discord-name").textContent = user.global_name || "Nino";
         document.getElementById("discord-tag").textContent = `@${user.username || "Ninwwo"}`;
 
