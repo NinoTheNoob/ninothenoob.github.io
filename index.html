@@ -18,6 +18,7 @@
       --text-main: #f4f8fb;
       --text-muted: rgba(235, 245, 252, 0.74);
       --accent: #7dd3fc;
+      --spotify-green: #1db954;
     }
 
     * {
@@ -39,6 +40,17 @@
       align-items: center;
       justify-content: center;
       padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    /* Fullscreen Particle Canvas (Cursor Trail & Confetti) */
+    #fx-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1000;
     }
 
     /* Hero Header */
@@ -275,6 +287,212 @@
       color: #a5f3fc;
     }
 
+    /* Live Spotify Spinning Vinyl Widget & History */
+    @keyframes spinVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .spotify-widget {
+      display: none;
+      margin-top: 16px;
+      padding: 12px 14px;
+      background: rgba(15, 28, 36, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .spotify-widget.active {
+      display: flex;
+    }
+
+    .spotify-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .vinyl-disc {
+      position: relative;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: radial-gradient(circle, #181818 0%, #090909 65%, #222 100%);
+      padding: 6px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+      animation: spinVinyl 7s linear infinite;
+    }
+
+    .vinyl-disc img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .vinyl-disc::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 11px;
+      height: 11px;
+      background: #132530;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .track-meta {
+      min-width: 0;
+    }
+
+    .track-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--spotify-green);
+      margin-bottom: 2px;
+    }
+
+    .track-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-artist {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .listen-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(29, 185, 84, 0.18);
+      border: 1px solid rgba(29, 185, 84, 0.45);
+      color: #dcfce7;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .listen-btn:hover {
+      background: var(--spotify-green);
+      color: #07190e;
+      transform: translateY(-1px);
+    }
+
+    /* Spotify History Drawer */
+    .spotify-history {
+      display: none;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .spotify-history.has-items {
+      display: block;
+    }
+
+    .history-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: background 0.2s;
+    }
+
+    .history-item:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .history-item-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .history-item-left img {
+      width: 26px;
+      height: 26px;
+      border-radius: 5px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .history-item-info {
+      min-width: 0;
+    }
+
+    .history-item-title {
+      font-size: 0.76rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .history-item-artist {
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .history-item i {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
     /* Separated Vertical Languages & Games Grid */
     .split-stack-grid {
       display: grid;
@@ -395,6 +613,10 @@
       background: var(--glass-card-hover);
       transform: translateY(-2px);
       border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .footer-pill.kofi-pill i {
+      color: #ff5e5b;
     }
 
     /* Secret Guestbook Modal (Easter Egg) */
@@ -547,6 +769,9 @@
 </head>
 <body>
 
+  <!-- Cursor Trail & Confetti Particle Canvas -->
+  <canvas id="fx-canvas"></canvas>
+
   <!-- Center Title -->
   <header class="hero-header">
     <h1>Portfolio</h1>
@@ -599,7 +824,7 @@
         </div>
       </section>
 
-      <!-- Live Discord Presence Card -->
+      <!-- Live Discord Presence + Spotify Vinyl & Recent Tracks -->
       <section class="glass-panel tilt-card" id="discord">
         <h3 class="section-heading">Discord Presence</h3>
         <div class="discord-box">
@@ -610,14 +835,36 @@
           <div class="discord-details">
             <h4 id="discord-name">Nino</h4>
             <div class="handle" id="discord-tag">@Ninwwo</div>
-            <div class="activity" id="discord-activity">Offline — desktop</div>
+            <div class="activity" id="discord-activity">Connecting...</div>
           </div>
+        </div>
+
+        <!-- Live Spinning Vinyl Spotify Widget -->
+        <div class="spotify-widget" id="spotify-widget">
+          <div class="spotify-left">
+            <div class="vinyl-disc">
+              <img src="" alt="Album Art" id="spotify-art">
+            </div>
+            <div class="track-meta">
+              <div class="track-badge"><i class="fa-brands fa-spotify"></i> Listening Now</div>
+              <div class="track-title" id="spotify-song">Song Title</div>
+              <div class="track-artist" id="spotify-artist">Artist Name</div>
+            </div>
+          </div>
+          <a href="#" target="_blank" class="listen-btn" id="spotify-link">
+            <i class="fa-solid fa-headphones"></i> Listen Along
+          </a>
+        </div>
+
+        <!-- Last 3 Played Tracks History -->
+        <div class="spotify-history" id="spotify-history">
+          <div class="history-label"><i class="fa-solid fa-clock-rotate-left"></i> Recently Played</div>
+          <div class="history-list" id="spotify-history-list"></div>
         </div>
       </section>
 
       <!-- Separated Vertical Languages & Games -->
       <div class="split-stack-grid" id="stack">
-        <!-- Languages Panel -->
         <section class="glass-panel tilt-card">
           <h3 class="section-heading">Languages</h3>
           <div class="vertical-list">
@@ -632,7 +879,6 @@
           </div>
         </section>
 
-        <!-- Games Panel -->
         <section class="glass-panel tilt-card">
           <h3 class="section-heading">Games</h3>
           <div class="vertical-list">
@@ -715,6 +961,9 @@
 
   <footer>
     <a href="https://github.com/NinoTheNoob" target="_blank" class="footer-pill">GitHub</a>
+    <a href="https://ko-fi.com/nin0" target="_blank" class="footer-pill kofi-pill" title="Support on Ko-fi">
+      <i class="fa-solid fa-mug-hot"></i> Support
+    </a>
     <button type="button" class="footer-pill" id="easter-egg-btn" title="Psst... click me">
       <i class="fa-solid fa-eye"></i> <span id="view-count">...</span> views
     </button>
@@ -744,7 +993,113 @@
     </div>
   </div>
 
-  <!-- 1. 3D Card Tilt & Cursor Spotlight Script -->
+  <!-- 1. Custom Cursor Trail & Confetti Particle Engine -->
+  <script>
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    let trailParticles = [];
+    let confettiParticles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    window.addEventListener('mousemove', (e) => {
+      for (let i = 0; i < 2; i++) {
+        trailParticles.push({
+          x: e.clientX + (Math.random() - 0.5) * 4,
+          y: e.clientY + (Math.random() - 0.5) * 4,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6 + 0.25,
+          size: Math.random() * 2.6 + 1.2,
+          alpha: 0.85
+        });
+      }
+    });
+
+    function triggerConfetti() {
+      const colors = ['#7dd3fc', '#38bdf8', '#1db954', '#f472b6', '#facc15', '#ffffff'];
+      const originX = window.innerWidth / 2;
+      const originY = window.innerHeight / 2;
+
+      for (let i = 0; i < 95; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 9 + 3;
+        confettiParticles.push({
+          x: originX,
+          y: originY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 3,
+          w: Math.random() * 7 + 4,
+          h: Math.random() * 4 + 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 12,
+          alpha: 1
+        });
+      }
+    }
+
+    function animateFX() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Render Cursor Trail
+      for (let i = trailParticles.length - 1; i >= 0; i--) {
+        const p = trailParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.032;
+        p.size *= 0.96;
+
+        if (p.alpha <= 0) {
+          trailParticles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = '#7dd3fc';
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#7dd3fc';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Render Confetti Explosion
+      for (let i = confettiParticles.length - 1; i >= 0; i--) {
+        const c = confettiParticles[i];
+        c.x += c.vx;
+        c.y += c.vy;
+        c.vy += 0.25; // gravity
+        c.vx *= 0.98;
+        c.rotation += c.rotSpeed;
+        c.alpha -= 0.014;
+
+        if (c.alpha <= 0) {
+          confettiParticles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = c.alpha;
+        ctx.translate(c.x, c.y);
+        ctx.rotate((c.rotation * Math.PI) / 180);
+        ctx.fillStyle = c.color;
+        ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+        ctx.restore();
+      }
+
+      requestAnimationFrame(animateFX);
+    }
+    animateFX();
+  </script>
+
+  <!-- 2. 3D Card Tilt & Cursor Spotlight Script -->
   <script>
     document.querySelectorAll('.tilt-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
@@ -769,9 +1124,10 @@
     });
   </script>
 
-  <!-- 2. Live Discord Presence Script (via Lanyard API) -->
+  <!-- 3. Real-Time Lanyard WebSocket + Spotify History -->
   <script>
     const DISCORD_USER_ID = "1519019638661451897";
+    const SPOTIFY_HISTORY_KEY = "nino_spotify_recent_tracks_v1";
 
     const statusColors = {
       online: "#23a55a",
@@ -787,44 +1143,131 @@
       offline: "Offline"
     };
 
-    async function fetchDiscordStatus() {
-      try {
-        const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
-        const { data, success } = await res.json();
-        if (!success) return;
+    function escapeText(str) {
+      return String(str || "").replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[m]));
+    }
 
-        const user = data.discord_user;
-        const avatarExt = user.avatar && user.avatar.startsWith("a_") ? "gif" : "png";
-        const avatarUrl = user.avatar
-          ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${avatarExt}?size=256`
-          : `https://cdn.discordapp.com/embed/avatars/0.png`;
+    function renderSpotifyHistory(currentTrackId) {
+      const saved = JSON.parse(localStorage.getItem(SPOTIFY_HISTORY_KEY) || "[]");
+      const filtered = saved.filter(t => t.track_id !== currentTrackId).slice(0, 3);
+      const container = document.getElementById("spotify-history");
+      const listEl = document.getElementById("spotify-history-list");
 
-        document.getElementById("discord-pfp").src = avatarUrl;
-        document.getElementById("main-avatar").src = avatarUrl;
-        document.getElementById("discord-name").textContent = user.global_name || "Nino";
-        document.getElementById("discord-tag").textContent = `@${user.username || "Ninwwo"}`;
+      if (filtered.length === 0) {
+        container.classList.remove("has-items");
+        return;
+      }
 
-        const status = data.discord_status || "offline";
-        document.getElementById("discord-dot").style.background = statusColors[status];
+      listEl.innerHTML = filtered.map(track => `
+        <a href="https://open.spotify.com/track/${escapeText(track.track_id)}" target="_blank" class="history-item">
+          <div class="history-item-left">
+            <img src="${escapeText(track.album_art_url)}" alt="Cover">
+            <div class="history-item-info">
+              <div class="history-item-title">${escapeText(track.song)}</div>
+              <div class="history-item-artist">${escapeText(track.artist)}</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      `).join("");
 
-        const playing = data.activities.find(a => a.type === 0);
-        if (playing) {
-          document.getElementById("discord-activity").textContent = `Playing ${playing.name}`;
-        } else if (data.listening_to_spotify) {
-          document.getElementById("discord-activity").textContent = `Listening to ${data.spotify.song}`;
-        } else {
-          document.getElementById("discord-activity").textContent = statusLabels[status];
-        }
-      } catch (err) {
-        console.log("Lanyard fetch skipped:", err);
+      container.classList.add("has-items");
+    }
+
+    function recordSpotifyTrack(sp) {
+      if (!sp || !sp.track_id) return;
+      let saved = JSON.parse(localStorage.getItem(SPOTIFY_HISTORY_KEY) || "[]");
+      saved = saved.filter(t => t.track_id !== sp.track_id);
+      saved.unshift({
+        track_id: sp.track_id,
+        song: sp.song,
+        artist: sp.artist,
+        album_art_url: sp.album_art_url
+      });
+      saved = saved.slice(0, 4);
+      localStorage.setItem(SPOTIFY_HISTORY_KEY, JSON.stringify(saved));
+    }
+
+    function updatePresenceUI(data) {
+      if (!data || !data.discord_user) return;
+
+      const user = data.discord_user;
+      const avatarExt = user.avatar && user.avatar.startsWith("a_") ? "gif" : "png";
+      const avatarUrl = user.avatar
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${avatarExt}?size=256`
+        : `https://cdn.discordapp.com/embed/avatars/0.png`;
+
+      document.getElementById("discord-pfp").src = avatarUrl;
+      document.getElementById("main-avatar").src = avatarUrl;
+      document.getElementById("discord-name").textContent = user.global_name || "Nino";
+      document.getElementById("discord-tag").textContent = `@${user.username || "Ninwwo"}`;
+
+      const status = data.discord_status || "offline";
+      document.getElementById("discord-dot").style.background = statusColors[status];
+
+      const playing = data.activities ? data.activities.find(a => a.type === 0) : null;
+      if (playing) {
+        document.getElementById("discord-activity").textContent = `Playing ${playing.name}`;
+      } else {
+        document.getElementById("discord-activity").textContent = statusLabels[status];
+      }
+
+      const spotifyWidget = document.getElementById("spotify-widget");
+      if (data.listening_to_spotify && data.spotify) {
+        const sp = data.spotify;
+        document.getElementById("spotify-art").src = sp.album_art_url;
+        document.getElementById("spotify-song").textContent = sp.song;
+        document.getElementById("spotify-artist").textContent = sp.artist;
+        document.getElementById("spotify-link").href = `https://open.spotify.com/track/${sp.track_id}`;
+        spotifyWidget.classList.add("active");
+
+        recordSpotifyTrack(sp);
+        renderSpotifyHistory(sp.track_id);
+      } else {
+        spotifyWidget.classList.remove("active");
+        renderSpotifyHistory(null);
       }
     }
 
-    fetchDiscordStatus();
-    setInterval(fetchDiscordStatus, 30000);
+    renderSpotifyHistory(null);
+
+    function connectLanyardWebSocket() {
+      const ws = new WebSocket("wss://api.lanyard.rest/socket");
+      let heartbeatInterval;
+
+      ws.onmessage = (event) => {
+        const payload = JSON.parse(event.data);
+
+        if (payload.op === 1) {
+          ws.send(JSON.stringify({
+            op: 2,
+            d: { subscribe_to_id: DISCORD_USER_ID }
+          }));
+
+          heartbeatInterval = setInterval(() => {
+            if (ws.readyState === WebSocket.OPEN) {
+              ws.send(JSON.stringify({ op: 3 }));
+            }
+          }, payload.d.heartbeat_interval);
+        }
+
+        if (payload.op === 0 && (payload.t === "INIT_STATE" || payload.t === "PRESENCE_UPDATE")) {
+          updatePresenceUI(payload.d);
+        }
+      };
+
+      ws.onclose = () => {
+        clearInterval(heartbeatInterval);
+        setTimeout(connectLanyardWebSocket, 3000);
+      };
+    }
+
+    connectLanyardWebSocket();
   </script>
 
-  <!-- 3. Live Page View Counter & Persistent Cloud Easter Egg Guestbook -->
+  <!-- 4. Live Page View Counter & Persistent Cloud Easter Egg Guestbook -->
   <script>
     async function updateViewCount() {
       try {
@@ -924,6 +1367,7 @@
 
       document.getElementById("gb-text").value = "";
       renderMessages(currentList);
+      triggerConfetti();
       btn.disabled = false;
       btn.textContent = "Post Note";
     });
