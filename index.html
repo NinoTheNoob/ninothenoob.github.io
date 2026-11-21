@@ -740,13 +740,13 @@
       color: #ff5e5b;
     }
 
-    /* Secret Guestbook Modal (Easter Egg) */
+    /* Rickroll Modal Easter Egg */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(8, 18, 24, 0.72);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(8, 18, 24, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       display: none;
       align-items: center;
       justify-content: center;
@@ -760,19 +760,20 @@
 
     .modal-box {
       width: 100%;
-      max-width: 440px;
-      background: rgba(24, 46, 58, 0.88);
+      max-width: 420px;
+      background: rgba(20, 38, 48, 0.94);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
-      padding: 24px;
+      padding: 22px;
       box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+      text-align: center;
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 12px;
     }
 
     .modal-header h3 {
@@ -792,85 +793,18 @@
       color: #fff;
     }
 
-    .modal-sub {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      margin-bottom: 14px;
-    }
-
-    .gb-form {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .gb-input {
-      background: rgba(255, 255, 255, 0.08);
+    .rickroll-img {
+      width: 100%;
+      border-radius: 12px;
       border: 1px solid var(--glass-border);
-      border-radius: 10px;
-      padding: 9px 12px;
-      color: #fff;
-      font-family: inherit;
-      font-size: 0.8rem;
-      outline: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      display: block;
+      margin-bottom: 12px;
     }
 
-    .gb-input:focus {
-      border-color: var(--accent);
-    }
-
-    .gb-submit {
-      background: rgba(125, 211, 252, 0.22);
-      border: 1px solid rgba(125, 211, 252, 0.45);
-      border-radius: 10px;
-      padding: 9px;
-      color: #e0f2fe;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .gb-submit:hover {
-      background: rgba(125, 211, 252, 0.35);
-    }
-
-    .gb-messages {
-      max-height: 190px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-right: 4px;
-    }
-
-    .gb-msg-item {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 9px 12px;
-    }
-
-    .gb-msg-top {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 3px;
-    }
-
-    .gb-msg-top span {
+    .rickroll-text {
+      font-size: 0.82rem;
       color: var(--text-muted);
-      font-weight: 400;
-      font-size: 0.65rem;
-    }
-
-    .gb-msg-body {
-      font-size: 0.78rem;
-      color: var(--text-main);
-      word-break: break-word;
     }
 
     /* Mobile Responsive */
@@ -1130,26 +1064,15 @@
     <span>&copy; 2026 Nino</span>
   </footer>
 
-  <!-- Secret Guestbook Modal (Easter Egg) -->
+  <!-- Rickroll GIF Easter Egg Modal -->
   <div class="modal-backdrop" id="gb-modal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-ghost"></i> Secret Wall</h3>
+        <h3><i class="fa-solid fa-music"></i> Gotcha!</h3>
         <button type="button" class="close-btn sfx-hover" id="gb-close"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <p class="modal-sub">You found the easter egg! Leave a note below (saved permanently in the cloud).</p>
-      
-      <form class="gb-form" id="gb-form">
-        <input type="text" id="gb-author" class="gb-input" placeholder="Your name or @tag" maxlength="24" required />
-        <input type="text" id="gb-text" class="gb-input" placeholder="Write a message..." maxlength="140" required />
-        <button type="submit" class="gb-submit sfx-hover" id="gb-submit-btn">Post Note</button>
-      </form>
-
-      <div class="gb-messages" id="gb-messages">
-        <div class="gb-msg-item">
-          <div class="gb-msg-body" style="opacity:0.7;">Loading notes...</div>
-        </div>
-      </div>
+      <img src="https://media.giphy.com/media/Vuw9m5wXviFIQ/giphy.gif" alt="Rickroll" class="rickroll-img" />
+      <p class="rickroll-text">Never gonna give you up, never gonna let you down! 🎶</p>
     </div>
   </div>
 
@@ -1560,13 +1483,10 @@
     connectLanyardWebSocket();
   </script>
 
-  <!-- 6. Live Click Counter & Persistent Cloud Guestbook -->
+  <!-- 6. Live Click Counter & Rickroll Easter Egg Modal Logic -->
   <script>
-    const GUESTBOOK_BIN_ID = "01a1fb8b-984c-7ce9-a8ab-6d8774d21a80";
-    const CLOUD_API = "https://jsonblob.com/api/jsonBlob";
     const CLICKS_STORAGE_KEY = "nino_live_clicks_v1";
 
-    // Real-Time Click Counter Tracker
     let totalClicks = parseInt(localStorage.getItem(CLICKS_STORAGE_KEY) || "0", 10);
     const clickCountEl = document.getElementById("click-count");
     const cornerClicksEl = document.getElementById("stat-corner-clicks");
@@ -1585,48 +1505,11 @@
     });
 
     const modal = document.getElementById("gb-modal");
-    const msgContainer = document.getElementById("gb-messages");
-
-    function escapeHTML(str) {
-      return String(str || "").replace(/[&<>"']/g, m => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[m]));
-    }
-
-    function renderMessages(list) {
-      if (!list || list.length === 0) {
-        msgContainer.innerHTML = `<div class="gb-msg-item"><div class="gb-msg-body" style="opacity:0.7;">No notes yet — be the first to sign!</div></div>`;
-        return;
-      }
-      msgContainer.innerHTML = list.slice().reverse().map(item => `
-        <div class="gb-msg-item">
-          <div class="gb-msg-top">${escapeHTML(item.author)} <span>${escapeHTML(item.date)}</span></div>
-          <div class="gb-msg-body">${escapeHTML(item.text)}</div>
-        </div>
-      `).join("");
-    }
-
-    async function loadMessages() {
-      try {
-        const res = await fetch(`${CLOUD_API}/${GUESTBOOK_BIN_ID}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data)) {
-            localStorage.setItem("nino_secret_guestbook_v1", JSON.stringify(data));
-            renderMessages(data);
-            return;
-          }
-        }
-      } catch (e) {}
-      
-      const cached = JSON.parse(localStorage.getItem("nino_secret_guestbook_v1") || "[]");
-      renderMessages(cached);
-    }
 
     document.getElementById("easter-egg-btn").addEventListener("click", () => {
       playSFX("open");
       modal.classList.add("open");
-      loadMessages();
+      triggerConfetti();
     });
 
     document.getElementById("gb-close").addEventListener("click", () => {
@@ -1639,47 +1522,6 @@
         playSFX("click");
         modal.classList.remove("open");
       }
-    });
-
-    document.getElementById("gb-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const author = document.getElementById("gb-author").value.trim();
-      const text = document.getElementById("gb-text").value.trim();
-      if (!author || !text) return;
-
-      const btn = document.getElementById("gb-submit-btn");
-      btn.disabled = true;
-      btn.textContent = "Posting...";
-
-      const today = new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-      const newEntry = { author, text, date: today };
-
-      let currentList = JSON.parse(localStorage.getItem("nino_secret_guestbook_v1") || "[]");
-      try {
-        const getRes = await fetch(`${CLOUD_API}/${GUESTBOOK_BIN_ID}`);
-        if (getRes.ok) {
-          const cloudData = await getRes.json();
-          if (Array.isArray(cloudData)) currentList = cloudData;
-        }
-      } catch (err) {}
-
-      currentList.push(newEntry);
-      localStorage.setItem("nino_secret_guestbook_v1", JSON.stringify(currentList));
-
-      try {
-        await fetch(`${CLOUD_API}/${GUESTBOOK_BIN_ID}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(currentList)
-        });
-      } catch (err) {}
-
-      document.getElementById("gb-text").value = "";
-      renderMessages(currentList);
-      playSFX("success");
-      triggerConfetti();
-      btn.disabled = false;
-      btn.textContent = "Post Note";
     });
   </script>
 </body>
